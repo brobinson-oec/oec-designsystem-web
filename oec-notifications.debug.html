@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
+    />
+    <title>Stencil Component Starter</title>
+
+    <script type="module" src="/build/oec.esm.js"></script>
+    <script nomodule src="/build/oec.js"></script>
+    <style>
+      body {
+        background-color: rgba(246, 242, 243, 0.6);
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <oec-notifications></oec-notifications>
+    <script>
+      const nav = document.querySelector('oec-notifications');
+      nav.enabledApps = ["OpsTrax","CollisionLink","RepairLink","D2DLink","ConsumerLink"];
+    </script>
+  </body>
+</html>

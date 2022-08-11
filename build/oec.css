@@ -1,0 +1,62 @@
+/*
+  Global App CSS
+  ----------------------
+  Use this file for styles that should be applied to all components.
+  For example, "font-family" within the "body" selector is a CSS property
+  most apps will want applied to all components.
+
+  Any global CSS variables should also be applied here.
+*/
+:root {
+  --app-primary-bg-color: #1f5593;
+  --app-secondary-text-color: #ffffff;
+  --app-secondary-bg-color: #ffffff;
+  --app-secondary-text-color: #b7c6d1;
+  --app-secondary-border-color: #d5d6d8;
+}
+
+.dark-backdrop {
+  background: rgba(0, 0, 0, 0.32);
+}
+
+.popover-panel {
+  --oec-overlay-background: #003b71;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex: 1;
+}
+
+.nav-tooltip-panel {
+  --oec-overlay-background: #222;
+  --oec-overlay-color: #FFF;
+  font-weight: normal;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+}
+
+.bento-popover-content {
+  background-color: #FFF;
+  margin: 1px -5px -5px -5px;
+  color: #000;
+  width: 500px;
+  height: 240px;
+  padding: 10px 10px 0 10px;
+}
+
+.bento-viewall-dialog-panel {
+  width: 500px;
+  height: 300px;
+  background-color: #FFF;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.notifications-popover-content {
+  background-color: #FFF;
+  margin: 1px -5px -5px -5px;
+  color: #000;
+  width: 600px;
+  height: 355px;
+  padding: 5px 0 0 0;
+}
