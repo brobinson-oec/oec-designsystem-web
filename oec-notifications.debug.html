@@ -1,29 +1,108 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
-    />
-    <title>Stencil Component Starter</title>
 
-    <script type="module" src="/build/oec.esm.js"></script>
-    <script nomodule src="/build/oec.js"></script>
-    <style>
-      body {
-        background-color: rgba(246, 242, 243, 0.6);
-        margin: 0;
-        padding: 0;
-      }
-    </style>
-  </head>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>Stencil Component Starter</title>
 
-  <body>
-    <oec-notifications></oec-notifications>
-    <script>
-      const nav = document.querySelector('oec-notifications');
-      nav.enabledApps = ["OpsTrax","CollisionLink","RepairLink","D2DLink","ConsumerLink"];
-    </script>
-  </body>
+  <script type="module" src="/build/oec.esm.js"></script>
+  <script nomodule src="/build/oec.js"></script>
+  <style>
+    body {
+      background-color: rgba(246, 242, 243, 0.6);
+      margin: 0;
+      padding: 20px;
+      font-family: 'Open Sans', sans-serif;
+      width: 600px;
+      margin: 0 auto;
+    }
+
+    h3 {
+      color: lightslategray;
+      margin-top: 3rem;
+    }
+
+    .grid {
+      display: grid;
+      gap: 30px;
+
+    }
+
+    :is(code, .component-wrapper) {
+      border: 1px solid #003B71;
+      border-radius: 3px;
+      border-top-width: 3px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+    }
+
+    code {
+      padding: 20px;
+      margin: 0;
+      color: #003B71;
+      width: 560px;
+    }
+
+    .component-wrapper {
+      height: 365px;
+      width: 600px;
+    }
+  </style>
+</head>
+
+<body>
+  <h3>Scenario 1. User enrolled with all products.</h3>
+  <div class="grid">
+    <div class="component-wrapper">
+      <oec-notifications id="notifications-1"></oec-notifications>
+    </div>
+    <code><b>enabledApps</b> = ['OpsTrax', 'DeliveryTrax', 'ValuTrax',
+      'BackTrax', 'CollisionLink', 'RepairLink', 'D2DLink',
+      'D2DExpress', 'MyPriceLink', 'LinkIQ', 'EPCLink', 'ConsumerLink', 'MarketPlaceDirect', 'PartsBrokerDirect']</code>
+  </div>
+
+  <h3>Scenario 2. User enrolled with one product.</h3>
+  <div class="grid">
+    <div class="component-wrapper">
+      <oec-notifications id="notifications-2"></oec-notifications>
+    </div>
+    <code><b>enabledApps</b> = ['CollisionLink']</code>
+  </div>
+
+  <h3>Scenario 3. User enrolled in only OEC products.</h3>
+  <div class="grid">
+    <div class="component-wrapper">
+      <oec-notifications id="notifications-3"></oec-notifications>
+    </div>
+    <code><b>enabledApps</b> = ['CollisionLink', 'RepairLink', 'D2DLink',
+      'D2DExpress', 'MyPriceLink', 'LinkIQ', 'EPCLink', 'ConsumerLink', 'MarketPlaceDirect', 'PartsBrokerDirect']</code>
+  </div>
+
+  <h3>Scenario 4. User enrolled in only OPS products.</h3>
+  <div class="grid">
+    <div class="component-wrapper">
+      <oec-notifications id="notifications-4"></oec-notifications>
+    </div>
+    <code><b>enabledApps</b> = ['ValuTrax', 'OpsTrax', 'DeliveryTrax', 'BackTrax']</code>
+  </div>
+
+  <script>
+    const notifications1 = document.querySelector('#notifications-1');
+    notifications1.enabledApps = ['OpsTrax', 'DeliveryTrax', 'ValuTrax',
+      'BackTrax', 'CollisionLink', 'RepairLink', 'D2DLink',
+      'D2DExpress', 'MyPriceLink', 'LinkIQ', 'EPCLink', 'ConsumerLink', 'MarketPlaceDirect', 'PartsBrokerDirect'];
+
+    const notifications2 = document.querySelector('#notifications-2');
+    notifications2.enabledApps = ['CollisionLink'];
+
+    const notifications3 = document.querySelector('#notifications-3');
+    notifications3.enabledApps = ['CollisionLink', 'RepairLink', 'D2DLink',
+      'D2DExpress', 'MyPriceLink', 'LinkIQ', 'EPCLink', 'ConsumerLink', 'MarketPlaceDirect', 'PartsBrokerDirect'];
+
+    const notifications4 = document.querySelector('#notifications-4');
+    notifications4.enabledApps = ['ValuTrax', 'OpsTrax', 'DeliveryTrax', 'BackTrax'];
+  </script>
+</body>
+
 </html>
