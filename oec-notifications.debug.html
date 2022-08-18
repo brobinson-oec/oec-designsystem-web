@@ -10,7 +10,7 @@
   <script nomodule src="/build/oec.js"></script>
   <style>
     body {
-      background-color: rgba(246, 242, 243, 0.6);
+      background-color: #fff;
       margin: 0;
       padding: 20px;
       font-family: 'Open Sans', sans-serif;
@@ -87,6 +87,14 @@
     <code><b>enabledApps</b> = ['ValuTrax', 'OpsTrax', 'DeliveryTrax', 'BackTrax']</code>
   </div>
 
+  <h3>Scenario 5. User without notifications.</h3>
+  <div class="grid">
+    <div class="component-wrapper">
+      <oec-notifications id="notifications-5"></oec-notifications>
+    </div>
+    <code><b>enabledApps</b> = ['ValuTrax', 'MyPriceLink', 'LinkIQ', 'EPCLink', 'DeliveryTrax', 'BackTrax']</code>
+  </div>
+
   <script>
     const notifications1 = document.querySelector('#notifications-1');
     notifications1.enabledApps = ['OpsTrax', 'DeliveryTrax', 'ValuTrax',
@@ -102,6 +110,9 @@
 
     const notifications4 = document.querySelector('#notifications-4');
     notifications4.enabledApps = ['ValuTrax', 'OpsTrax', 'DeliveryTrax', 'BackTrax'];
+
+    const notifications5 = document.querySelector('#notifications-5');
+    notifications5.enabledApps = ['ValuTrax', 'MyPriceLink', 'LinkIQ', 'EPCLink', 'DeliveryTrax', 'BackTrax'];
   </script>
 </body>
 

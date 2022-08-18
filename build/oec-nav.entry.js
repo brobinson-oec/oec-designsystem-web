@@ -3,7 +3,7 @@ import { S as Subject, R as ReplaySubject, m as merge, a as map, s as switchMap,
 import './index-f1c6839d.js';
 import './oec-nav-menu-action-f6c4cc1c.js';
 import './oec-user-icon-1fc1f575.js';
-import { O as Overlay } from './Overlay-f250d759.js';
+import { O as Overlay } from './Overlay-f62950a4.js';
 
 const MyIconBellSolid = (attrs) => (h("svg", Object.assign({ xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 448 512", fill: "currentColor" }, attrs),
   h("path", { d: "M256 32v19.2c73 14.83 128 79.4 128 156.8v18.8c0 47.1 17.3 92.4 48.5 127.6l7.4 8.3c8.4 9.5 10.5 22.9 5.3 34.4S428.6 416 416 416H32c-12.6 0-24.029-7.4-29.191-18.9-5.162-11.5-3.097-24.9 5.275-34.4l7.416-8.3C46.74 319.2 64 273.9 64 226.8V208c0-77.4 54.1-141.97 128-156.8V32c0-17.67 14.3-32 32-32s32 14.33 32 32zm-32 480c-17 0-33.3-6.7-45.3-18.7S160 464.1 160 448h128c0 16.1-6.7 33.3-18.7 45.3S240.1 512 224 512z" })));
@@ -153,9 +153,11 @@ const OecNav = class {
       bufferSize: 1,
       refCount: true
     }));
-    shared.pipe(takeUntil(this.destroy$)).subscribe(x => {
-      this.missedNotifications = x;
-    });
+    // shared.pipe(
+    //   takeUntil(this.destroy$)
+    // ).subscribe(x => {
+    //   this.missedNotifications = x;
+    // });
     shared.pipe(scan((acc, value) => (value % 3) === 0 && value !== 0 ? (acc + 1) : acc, 0), // every 3 seconds
     distinctUntilChanged(), takeUntil(this.destroy$)).subscribe(x => {
       this.missedMessages = x;
@@ -167,6 +169,10 @@ const OecNav = class {
     }
     this.destroy$.next();
     this.destroy$.complete();
+  }
+  getChangedValue(event) {
+    console.log("totalNotificationsChanged", event);
+    this.missedNotifications = event.detail;
   }
   render() {
     const styles = { width: "15px", height: "15px" };

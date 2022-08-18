@@ -1,35 +1,165 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
-    <title>Stencil Component Starter</title>
 
-    <script type="module" src="/build/oec.esm.js"></script>
-    <script nomodule src="/build/oec.js"></script>
-    <link rel="stylesheet" href="/build/oec.css" />
-    <style>
-      body {
-        background-color: rgba(246,242,243,0.6);
-        margin: 0;
-        padding: 0;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        right: 0;
-        left: 0;
-        display: flex;
-        flex: 1;
-      }
-    </style>
-  </head>
-  <body>
-    <oec-app-launcher>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>Stencil Component Starter</title>
 
-    </oec-app-launcher>
-    <script>
-      const nav = document.querySelector('oec-app-launcher');
-      nav.enabledApps = ["OPSTrax","BackTrax","EPC"];
-    </script>
-  </body>
-</html>
+  <script type="module" src="/build/oec.esm.js"></script>
+  <script nomodule src="/build/oec.js"></script>
+  <style>
+    body {
+      background-color: rgba(246, 242, 243, 0.6);
+      margin: 0;
+      padding: 20px;
+      font-family: 'Open Sans', sans-serif;
+      width: 900px;
+      margin: 0 auto;
+    }
+
+    a:any-link {
+      color: #05f;
+    }
+
+    h3 {
+      color: lightslategray;
+      margin-top: 3rem;
+    }
+
+    .flex {
+      display: flex;
+      gap: 30px;
+
+    }
+
+    :is(pre, .launcher-wrapper) {
+      border: 1px solid #003B71;
+      border-radius: 3px;
+      border-top-width: 3px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+
+    }
+
+    pre,
+    code {
+      padding: 20px;
+      margin: 0;
+      color: crimson
+    }
+
+    .big {
+      font-size: larger;
+    }
+
+    :is(.over-wrapper, .launcher-wrapper) {
+      width: min-content;
+    }
+  </style>
+</head>
+
+<body>
+  <ol>
+    <li><a href="#s1">Scenario 1. Generic. A user subscribed to up to 9 OEC and up to 9 OPS products</a></li>
+    <li><a href="#s2">Scenario 2. Scroll bar. A user subscribed for more than 9 of one of the product types</a></li>
+    <li><a href="#s3">Scenario 3. One column. A user subscribed to only OEC or only OPS applications</a></li>
+    <li><a href="#s4">Scenario 3. One column. A user subscribed to only OEC or only OPS applications</a></li>
+  </ol>
+
+  <h3>Default with wrapping DIV</h3>
+  <div class="flex">
+
+    <div class="launcher-wrapper">
+      <oec-app-launcher id="launcher04"></oec-app-launcher>
+    </div>
+    <pre>
+<b class="big">Code:</b>     
+
+<b>CSS</b>
+.launcher-wrapper {
+  width: min-content;
+  /* ... */
+}      
+<b>HTML</b>
+&lt;div class="launcher-wrapper">
+  &lt;oec-app-launcher>&lt;/oec-app-launcher>
+&lt;/div>
+
+<code><b>enabledApps</b> = ["OPSTrax", "DeliveryTrax", "ValuTrax", 
+  "BackTrax", "CollisionLink", "RepairLink", "D2DLink", 
+  "D2DExpress", "MyPriceLink", "LinkIQ", "EPCLink", "ConsumerLink"]</code>
+</pre>
+  </div>
+
+  <h3 id="s1">Scenario 1. Generic. A user subscribed to up to 9 OEC and up to 9 OPS products</h3>
+  <div class="flex">
+    <div class="over-wrapper">
+      <oec-app-launcher id="launcher01"></oec-app-launcher>
+    </div>
+    <code><b>enabledApps</b> = ['OPSTrax', 'DeliveryTrax', 'ValuTrax', 'CollisionLink', 'D2DLink', 'LinkIQ', 'MyPriceLink',
+      'EPCLink']</code>
+  </div>
+
+  <h3 id="s2">Scenario 2. Scroll bar. A user subscribed for more than 9 of one of the product types</h3>
+  <div class="flex">
+    <div class="over-wrapper">
+      <oec-app-launcher id="launcher05"></oec-app-launcher>
+    </div>
+    <code><b>enabledApps</b> = ["OPSTrax", "DeliveryTrax", "ValuTrax", "CollisionLink", "RepairLink", "D2DLink", "D2DExpress", "MyPriceLink", "LinkIQ", "EPCLink", "ConsumerLink", "Marketplace Direct", "FakeLink", "TraxPartners", "TraxAR", "SubTrax","BackTrax"]</code>
+  </div>
+
+  <h3 id="s3">Scenario 3. One column. A user subscribed to only OPS applications</h3>
+  <div class="flex">
+    <oec-app-launcher id="launcher02"></oec-app-launcher>
+    <code><b>enabledApps</b> = ["ValuTrax", "OPSTrax", "DeliveryTrax", "BackTrax"]</code>
+  </div>
+
+  <h3 id="s4">Scenario 3. One column. A user subscribed to only OEC applications (with the wrapper DIV)</h3>
+  <div class="flex">
+    <div class="launcher-wrapper">
+      <oec-app-launcher id="launcher03"></oec-app-launcher>
+    </div>
+    <pre>
+    <b class="big">Code:</b>     
+    
+  <b>CSS</b>
+  .launcher-wrapper {
+    width: min-content;
+    /* ... */
+  }      
+  <b>HTML</b>
+  &lt;div class="launcher-wrapper">
+    &lt;oec-app-launcher>&lt;/oec-app-launcher>
+  &lt;/div>
+
+<code><b>enabledApps</b> = ["CollisionLink", "D2DLink", "LinkIQ", "MyPriceLink", "EPCLink"]</code>
+    </pre>
+  </div>
+
+
+  <script>
+    const launcher4 = document.querySelector('#launcher04');
+    launcher4.enabledApps = ["OPSTrax", "DeliveryTrax", "ValuTrax",
+      "BackTrax", "CollisionLink", "RepairLink", "D2DLink",
+      "D2DExpress", "MyPriceLink", "LinkIQ", "EPCLink", "ConsumerLink"];
+    /* scenario: has some OPS app,  has some OEC apps */
+    const launcher1 = document.querySelector('#launcher01');
+    launcher1.enabledApps = ['OPSTrax', 'DeliveryTrax', 'ValuTrax', 'CollisionLink', 'D2DLink', 'LinkIQ', 'MyPriceLink', 'EPCLink']
+
+    /* scenario: has only OPS app */
+    const launcher2 = document.querySelector('#launcher02');
+    launcher2.enabledApps = ["ValuTrax", "OPSTrax", "DeliveryTrax", "BackTrax"]
+
+
+    /* scenario: has hull house + 10 in a column */
+    const launcher5 = document.querySelector('#launcher05');
+    launcher5.enabledApps = ["OPSTrax", "DeliveryTrax", "ValuTrax", "CollisionLink", "RepairLink", "D2DLink", "D2DExpress", "MyPriceLink", "LinkIQ", "EPCLink", "ConsumerLink", "Marketplace Direct", "FakeLink", "TraxPartners", "TraxAR", "SubTrax", "BackTrax"]
+
+    /* scenario: has only OEC app */
+    const launcher3 = document.querySelector('#launcher03');
+    launcher3.enabledApps = ["CollisionLink", "D2DLink", "LinkIQ", "MyPriceLink", "EPCLink"]
+
+  </script>
+
+</body>
