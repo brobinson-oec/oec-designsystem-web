@@ -433,8 +433,6 @@ const OecNotifications = class {
       this.notifications = x;
       if (this.notifications && this.notifications.length > 0) {
         this.totalNotificationsChanged.emit(this.getTotalNotificationsCount());
-        const firstApp = this.notifications.sort(sortByMostUnread)[0];
-        this.selectedApp = firstApp["appName"];
       }
     });
   }
