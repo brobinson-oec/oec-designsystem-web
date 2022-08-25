@@ -1,7 +1,9 @@
-import { h, r as registerInstance, e as createEvent, i as getAssetPath, f as Host, g as getElement } from './index-13f33587.js';
-import { s as sub } from './oec-notification-items-36a5dc68.js';
-import { R as ReplaySubject, j as from, t as takeUntil } from './index-c55aa8a2.js';
-import './index-f1c6839d.js';
+import { h, r as registerInstance, e as createEvent, i as getAssetPath, f as Host, g as getElement } from './index-1f24ee20.js';
+import { s as sub } from './oec-notification-items-d0ba808f.js';
+import { R as ReplaySubject, g as from, t as takeUntil } from './index-7ddd6289.js';
+import './index-1afca086.js';
+import { O as Overlay } from './Overlay-a5402930.js';
+import { p as popover } from './middleware-a13520b6.js';
 
 const NOTIFICATIONS = [
   {
@@ -304,10 +306,10 @@ const MyIconChevronRightSolid = (attrs) => (h("svg", Object.assign({ xmlns: "htt
 const MyIconGearSolid = (attrs) => (h("svg", Object.assign({ xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 512 512" }, attrs),
   h("path", { d: "M495.9 166.6C499.2 175.2 496.4 184.9 489.6 191.2L446.3 230.6C447.4 238.9 448 247.4 448 256C448 264.6 447.4 273.1 446.3 281.4L489.6 320.8C496.4 327.1 499.2 336.8 495.9 345.4C491.5 357.3 486.2 368.8 480.2 379.7L475.5 387.8C468.9 398.8 461.5 409.2 453.4 419.1C447.4 426.2 437.7 428.7 428.9 425.9L373.2 408.1C359.8 418.4 344.1 427 329.2 433.6L316.7 490.7C314.7 499.7 307.7 506.1 298.5 508.5C284.7 510.8 270.5 512 255.1 512C241.5 512 227.3 510.8 213.5 508.5C204.3 506.1 197.3 499.7 195.3 490.7L182.8 433.6C167 427 152.2 418.4 138.8 408.1L83.14 425.9C74.3 428.7 64.55 426.2 58.63 419.1C50.52 409.2 43.12 398.8 36.52 387.8L31.84 379.7C25.77 368.8 20.49 357.3 16.06 345.4C12.82 336.8 15.55 327.1 22.41 320.8L65.67 281.4C64.57 273.1 64 264.6 64 256C64 247.4 64.57 238.9 65.67 230.6L22.41 191.2C15.55 184.9 12.82 175.3 16.06 166.6C20.49 154.7 25.78 143.2 31.84 132.3L36.51 124.2C43.12 113.2 50.52 102.8 58.63 92.95C64.55 85.8 74.3 83.32 83.14 86.14L138.8 103.9C152.2 93.56 167 84.96 182.8 78.43L195.3 21.33C197.3 12.25 204.3 5.04 213.5 3.51C227.3 1.201 241.5 0 256 0C270.5 0 284.7 1.201 298.5 3.51C307.7 5.04 314.7 12.25 316.7 21.33L329.2 78.43C344.1 84.96 359.8 93.56 373.2 103.9L428.9 86.14C437.7 83.32 447.4 85.8 453.4 92.95C461.5 102.8 468.9 113.2 475.5 124.2L480.2 132.3C486.2 143.2 491.5 154.7 495.9 166.6V166.6zM256 336C300.2 336 336 300.2 336 255.1C336 211.8 300.2 175.1 256 175.1C211.8 175.1 176 211.8 176 255.1C176 300.2 211.8 336 256 336z" })));
 
-const MyIconThumbsUpRegular = (attrs) => (h("svg", Object.assign({ xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 512 512" }, attrs),
-  h("path", { d: "M96 191.1H32c-17.67 0-32 14.33-32 31.1v223.1c0 17.67 14.33 31.1 32 31.1h64c17.67 0 32-14.33 32-31.1V223.1C128 206.3 113.7 191.1 96 191.1zM512 227c0-36.89-30.05-66.92-66.97-66.92h-99.86C354.7 135.1 360 113.5 360 100.8c0-33.8-26.2-68.78-70.06-68.78c-46.61 0-59.36 32.44-69.61 58.5c-31.66 80.5-60.33 66.39-60.33 93.47c0 12.84 10.36 23.99 24.02 23.99c5.256 0 10.55-1.721 14.97-5.26c76.76-61.37 57.97-122.7 90.95-122.7c16.08 0 22.06 12.75 22.06 20.79c0 7.404-7.594 39.55-25.55 71.59c-2.046 3.646-3.066 7.686-3.066 11.72c0 13.92 11.43 23.1 24 23.1h137.6C455.5 208.1 464 216.6 464 227c0 9.809-7.766 18.03-17.67 18.71c-12.66 .8593-22.36 11.4-22.36 23.94c0 15.47 11.39 15.95 11.39 28.91c0 25.37-35.03 12.34-35.03 42.15c0 11.22 6.392 13.03 6.392 22.25c0 22.66-29.77 13.76-29.77 40.64c0 4.515 1.11 5.961 1.11 9.456c0 10.45-8.516 18.95-18.97 18.95h-52.53c-25.62 0-51.02-8.466-71.5-23.81l-36.66-27.51c-4.315-3.245-9.37-4.811-14.38-4.811c-13.85 0-24.03 11.38-24.03 24.04c0 7.287 3.312 14.42 9.596 19.13l36.67 27.52C235 468.1 270.6 480 306.6 480h52.53c35.33 0 64.36-27.49 66.8-62.2c17.77-12.23 28.83-32.51 28.83-54.83c0-3.046-.2187-6.107-.6406-9.122c17.84-12.15 29.28-32.58 29.28-55.28c0-5.311-.6406-10.54-1.875-15.64C499.9 270.1 512 250.2 512 227z" })));
+const MyIconThumbsUpRegular = (attrs) => (h("svg", Object.assign({ "data-name": "Layer 1", viewBox: "0 0 200 200", xmlns: "http://www.w3.org/2000/svg" }, attrs),
+  h("path", { class: "cls-1", d: "m139.24 11.52c12.14 5.32 22.68 12.76 31.61 22.3 8.93 9.55 15.69 20.5 20.26 32.84 4.57 12.35 6.48 25.1 5.73 38.26-0.75 13.17-4.06 25.68-9.92 37.55-5.87 11.87-13.85 22.03-23.94 30.49-10.1 8.46-21.45 14.6-34.07 18.42s-25.47 4.98-38.57 3.48-25.37-5.52-36.83-12.07l-0.61-0.2-29.67 8.39c-1.91 0.54-3.82 0.58-5.73 0.1s-3.58-1.43-5.01-2.87c-1.43-1.43-2.39-3.1-2.86-5.01-0.48-1.91-0.38-3.82 0.31-5.73l8.39-29.46-0.2-0.61c-8.59-14.87-12.89-30.83-12.89-47.88s4.3-33.01 12.89-47.88 20.29-26.57 35.09-35.09 30.79-12.79 47.98-12.79c13.23 0 25.92 2.59 38.06 7.78zm-4.3 169.83c10.91-4.5 20.49-10.91 28.75-19.23 8.25-8.32 14.63-17.87 19.13-28.65 4.5-10.77 6.75-22.1 6.75-33.97s-2.42-24.08-7.26-35.4-11.77-21.21-20.77-29.67-19.34-14.73-31-18.83c-11.66-4.09-23.6-5.69-35.81-4.81-12.21 0.89-23.77 4.13-34.68 9.72-10.92 5.59-20.29 13.2-28.14 22.81-7.85 9.62-13.34 20.36-16.47 32.23-3.14 11.87-3.89 23.91-2.25 36.12s5.73 23.57 12.28 34.07l0.61 1.23-9.21 32.74c-0.41 1.23-0.14 2.32 0.82 3.27 0.95 0.95 2.05 1.23 3.27 0.82l32.94-9 1.23 0.82c12.14 7.23 25.24 11.36 39.29 12.38s27.55-1.2 40.51-6.65zm-53.41-90.85c1.36 1.23 2.05 2.8 2.05 4.71v24.55c0 1.91-0.65 3.51-1.94 4.81-1.3 1.3-2.9 1.94-4.81 1.94h-11.25v-38.06h11.25c1.91 0 3.48 0.68 4.71 2.05zm54.63 9c-0.68 0.96-1.57 1.57-2.66 1.84 0.95 1.23 1.43 2.59 1.43 4.09 0 1.09-0.31 2.12-0.92 3.07-0.61 0.96-1.47 1.64-2.56 2.05 0.95 1.09 1.4 2.39 1.33 3.89s-0.65 2.76-1.74 3.79c-1.09 1.02-2.45 1.53-4.09 1.53 0.68 0.82 1.06 1.74 1.13 2.76s-0.14 2.01-0.61 2.97c-0.48 0.96-1.13 1.74-1.94 2.35-0.82 0.61-1.77 0.92-2.86 0.92h-16.78c-2.32 0-4.57-0.34-6.75-1.02-1.64-0.82-3.21-1.7-4.71-2.66-2.05-1.23-4.23-2.25-6.55-3.07v-29.06l2.46-1.02c1.91-0.95 3.68-2.11 5.32-3.48 2.32-1.77 4.23-3.89 5.73-6.34 1.64-3.27 2.39-6.75 2.25-10.44 0-1.5 0.54-2.79 1.64-3.89 1.09-1.09 2.38-1.64 3.89-1.64s2.79 0.55 3.89 1.64c1.09 1.09 1.64 2.39 1.64 3.89l-0.2 5.73c-0.27 4.23-0.68 6.96-1.23 8.18-1.09 1.5-1.23 2.8-0.41 3.89 0.41 0.82 1.02 1.23 1.84 1.23h16.78c1.64-0.13 3 0.34 4.09 1.43s1.64 2.46 1.64 4.09c0 1.23-0.34 2.32-1.02 3.27z" })));
 
-const oecNotificationsCss = ":host{display:flex;flex:1;flex-flow:column nowrap;font-family:Open Sans, sans-serif;overflow-y:hidden}:host .header{background:#fff;display:block}:host .title{text-transform:uppercase;font-size:1rem;padding:10px;float:left}:host .dismiss-all-container,:host .notification-settings-container{padding:5px;margin:5px 5px 5px 0;float:right}:host .dismiss-all-container:hover,:host .notification-settings-container:hover{background-color:#dddddd;border:0px solid #dddddd;border-radius:4px;cursor:pointer;transition:all 100ms ease-out}:host .dismiss-all{font-family:Open Sans, sans-serif;font-size:0.8rem}:host .svg-icon{height:15px;width:15px}:host .svg-icon.gear{fill:#00507d}:host .empty-body{text-align:center;display:grid;justify-content:center;align-items:center;padding:80px}:host .svg-icon-thumb{height:100px;width:100px;margin:auto;fill:#d3d3d3}:host .apps{border-top:1px solid #e2e2e2;display:flex}:host .nav-tabs-wrapper{background-color:#ececec;display:flex;flex:96%;overflow:hidden}:host .nav.nav-tabs.nav-justified{display:flex;flex:96%;flex-flow:nowrap;list-style-type:none;margin:0;padding:0;background-color:#ececec;transition:transform 150ms ease-out;z-index:3}:host .nav-tabs.nav-justified>li{float:left}:host .nav-tabs.nav-justified>li:not(:last-child){border-right:1px solid #e2e2e2}:host .nav-tabs.nav-justified>li:hover{background-color:#fff;cursor:pointer}:host .nav-tabs.nav-justified>li.app-tab.active{background-color:#fff;border:none;border-radius:0}:host .nav-tabs.nav-justified>li>div{border-radius:0;color:#a7a7a7;display:inline-flex;font-size:14px;padding:10px;text-decoration:none;text-align:center;justify-content:center;transition:background-color 100ms ease-out}:host .nav-tabs.nav-justified>li>div>.app-logo{align-self:center;vertical-align:middle}:host .nav-tabs.nav-justified>li>div>.app-logo:not(.opstrax){transform:scale(0.75)}:host .nav-tabs.nav-justified>li>div>span.badge-content{background-color:#f44336;border:3px solid #f44336;border-radius:50%;color:#fff;display:inline-block;font-size:14px;font-weight:600;height:25px;line-height:25px;margin-left:5px;text-align:center;text-overflow:ellipsis;transform:scale(0.8);white-space:nowrap;width:25px;vertical-align:middle}:host .navigation-arrow-left,:host .navigation-arrow-right{flex:2%;text-align:center;background:#dddddd;border:none;border-bottom:1px solid #e2e2e2;transition:transform 150ms linear;z-index:30}:host .navigation-arrow-left:hover,:host .navigation-arrow-right:hover{background-color:#fff;cursor:pointer}:host .navigation-arrow-left:disabled,:host .navigation-arrow-right:disabled{background:#ececec;cursor:default}";
+const oecNotificationsCss = ":host{display:flex;flex:1;flex-flow:column nowrap;font-family:Open Sans, sans-serif;overflow-y:hidden}:host .header{background:#fff;display:block}:host .title{text-transform:uppercase;font-size:1rem;padding:10px;float:left}:host .notification-settings-container{padding:5px;margin:5px 5px 5px 0;float:right}:host .notification-settings-container:hover{background-color:#dddddd;border:0px solid #dddddd;border-radius:4px;cursor:pointer;transition:all 100ms ease-out}:host .dismiss-all{font-family:Open Sans, sans-serif;font-size:0.8rem;border:none;background-color:#fff;padding:5px;margin:5px 5px 5px 0;float:right}:host .dismiss-all:hover{background-color:#dddddd;border:0px solid #dddddd;border-radius:4px;cursor:pointer;transition:all 100ms ease-out}:host .dismiss-all:disabled{border:none;background-color:#fff;cursor:default}:host .svg-icon{height:15px;width:15px}:host .svg-icon.gear{fill:#00507d}:host .empty-body{text-align:center;display:grid;justify-content:center;align-items:center;padding:80px}:host .svg-icon-thumb{height:100px;width:100px;margin:auto;fill:#ddd}:host .apps{border-top:1px solid #e2e2e2;display:flex}:host .nav-tabs-wrapper{background-color:#ececec;display:flex;flex:96%;overflow:hidden}:host .nav.nav-tabs.nav-justified{display:flex;flex:96%;flex-flow:nowrap;list-style-type:none;margin:0;padding:0;background-color:#ececec;transition:transform 150ms ease-out;z-index:3}:host .nav-tabs.nav-justified>li{float:left}:host .nav-tabs.nav-justified>li:not(:last-child){border-right:1px solid #e2e2e2}:host .nav-tabs.nav-justified>li:hover{background-color:#fff;cursor:pointer}:host .nav-tabs.nav-justified>li.app-tab.active{background-color:#fff;border:none;border-radius:0}:host .nav-tabs.nav-justified>li>div{border-radius:0;color:#a7a7a7;display:inline-flex;font-size:14px;padding:10px;text-decoration:none;text-align:center;justify-content:center;transition:background-color 100ms ease-out}:host .nav-tabs.nav-justified>li>div>.app-logo{align-self:center;vertical-align:middle}:host .nav-tabs.nav-justified>li>div>.app-logo:not(.opstrax){transform:scale(0.75)}:host .nav-tabs.nav-justified>li>div>span.badge-content{background-color:#f44336;border:3px solid #f44336;border-radius:50%;color:#fff;display:inline-block;font-size:14px;font-weight:600;height:25px;line-height:25px;margin-left:5px;text-align:center;text-overflow:ellipsis;transform:scale(0.8);white-space:nowrap;width:25px;vertical-align:middle}:host .navigation-arrow-left,:host .navigation-arrow-right{flex:2%;text-align:center;background:#dddddd;border:none;border-bottom:1px solid #e2e2e2;transition:transform 150ms linear;z-index:30}:host .navigation-arrow-left:hover,:host .navigation-arrow-right:hover{background-color:#fff;cursor:pointer}:host .navigation-arrow-left:disabled,:host .navigation-arrow-right:disabled{background:#ececec;cursor:default}";
 
 function sortByMostUnread(a, b) {
   if (a.notifications.length > b.notifications.length) {
@@ -324,14 +326,22 @@ const OecNotifications = class {
     this.totalNotificationsChanged = createEvent(this, "totalNotificationsChanged", 7);
     this.dismissAllClicked = createEvent(this, "dismissAllClicked", 7);
     this.settingsClicked = createEvent(this, "settingsClicked", 7);
+    this.overlayRefs = [];
     this.destroy$ = new ReplaySubject(1);
     this.notificationService = new NotificationService();
     this.carouselOffset = 0;
     this.selectedApp = "";
     this.notifications = [];
-    this.enabledApps = ['CollisionLink'];
+    this.enabledApps = [];
     this.companyId = '';
     this.userId = '';
+    this.getTotalNotificationsCount = () => {
+      let totalNotifications = 0;
+      this.notifications.forEach(element => {
+        totalNotifications += element.notifications.length;
+      });
+      return totalNotifications;
+    };
     // private handleResize = (e) => {
     //   console.log("app list resized", e);
     //   //this.render();
@@ -384,8 +394,14 @@ const OecNotifications = class {
     this.onDismissAllClicked = () => {
       this.dismissAllClicked.emit();
     };
-    this.onSettingsClicked = () => {
-      this.settingsClicked.emit();
+    this.showSettingsPopover = async (el) => {
+      this.overlayRefs.push(await Overlay.attach(el, {
+        template: () => h("oec-notifications-settings", null),
+        panelClass: 'mini-menu-panel',
+        hasBackdrop: true,
+        hasArrow: false,
+        middleware: [popover()]
+      }));
     };
   }
   appTemplateRender(notification) {
@@ -395,26 +411,37 @@ const OecNotifications = class {
     return (h("li", { class: isSelectedApp ? "app-tab active" : "app-tab", id: notification.appName, onClick: () => this.changeSelectedApp(notification.appName) }, h("div", null, h("img", { class: "app-logo " + notification.appName.toLowerCase(), src: imgSrc, title: notification.appName, alt: notification.appName }), h("span", { class: "badge-content" }, unreadNotifications))));
   }
   connectedCallback() {
-    console.log("connectedCallback called");
     from(this.notificationService.getAllNotificationsFromApps(this.enabledApps))
       .pipe(takeUntil(this.destroy$))
       .subscribe((x) => {
       this.notifications = x;
       if (this.notifications && this.notifications.length > 0) {
-        console.log("this.notifications.length", this.notifications.length);
-        this.totalNotificationsChanged.emit(this.notifications.length);
+        this.totalNotificationsChanged.emit(this.getTotalNotificationsCount());
         const firstApp = this.notifications.sort(sortByMostUnread)[0];
         this.selectedApp = firstApp["appName"];
       }
     });
   }
-  // componentShouldUpdate() {
-  //   const element = this.el.shadowRoot.getElementById("ul-app");
-  //   console.log("appListElement", element);
-  //   this.appListObserver = new ResizeObserver((e) => this.handleResize(e));
-  //   this.appListObserver.observe(element);
-  // }
+  componentShouldUpdate() {
+    // const element = this.el.shadowRoot.getElementById("ul-app");
+    // console.log("appListElement", element);
+    // this.appListObserver = new ResizeObserver((e) => this.handleResize(e));
+    // this.appListObserver.observe(element);
+    from(this.notificationService.getAllNotificationsFromApps(this.enabledApps))
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((x) => {
+      this.notifications = x;
+      if (this.notifications && this.notifications.length > 0) {
+        this.totalNotificationsChanged.emit(this.getTotalNotificationsCount());
+        const firstApp = this.notifications.sort(sortByMostUnread)[0];
+        this.selectedApp = firstApp["appName"];
+      }
+    });
+  }
   disconnectedCallback() {
+    for (const overlay of this.overlayRefs) {
+      overlay.dispose();
+    }
     // if (this.appListObserver) {
     //   this.appListObserver.disconnect();
     // }
@@ -431,7 +458,7 @@ const OecNotifications = class {
       selectedAppNotifications = selectedApp["notifications"];
       selectedAppUrl = selectedApp["url"];
     }
-    return (h(Host, null, h("div", { class: "header" }, h("span", { class: "title" }, h("strong", null, "Global Order Notifications")), h("div", { class: "notification-settings-container", onClick: this.onSettingsClicked }, h(MyIconGearSolid, { class: "svg-icon gear" })), h("div", { class: "dismiss-all-container", onClick: this.onDismissAllClicked }, h("span", { class: "dismiss-all" }, "Dismiss All"))), h("div", { class: "body" }, this.notifications.length > 0 ? (h("div", { class: "apps" }, h("button", { class: "navigation-arrow-left", onClick: this.moveLeft, disabled: this.atStartOfList() }, h(MyIconChevronLeftSolid, { class: "svg-icon" })), h("div", { class: "nav-tabs-wrapper" }, h("ul", { class: "nav nav-tabs nav-justified", id: "ul-app", style: {
+    return (h(Host, null, h("div", { class: "header" }, h("span", { class: "title" }, h("strong", null, "Global Order Notifications")), h("div", { class: "notification-settings-container", ref: this.showSettingsPopover }, h(MyIconGearSolid, { class: "svg-icon gear" })), h("div", { class: "dismiss-all-container" }, h("button", { class: "dismiss-all", onClick: this.onDismissAllClicked, disabled: this.notifications.length === 0 }, "Dismiss All"))), h("div", { class: "body" }, this.notifications.length > 0 ? (h("div", { class: "apps" }, h("button", { class: "navigation-arrow-left", onClick: this.moveLeft, disabled: this.atStartOfList() }, h(MyIconChevronLeftSolid, { class: "svg-icon" })), h("div", { class: "nav-tabs-wrapper" }, h("ul", { class: "nav nav-tabs nav-justified", id: "ul-app", style: {
         transform: "translateX(" + this.carouselOffset + "px)"
       } }, this.notifications
       .sort(sortByMostUnread)

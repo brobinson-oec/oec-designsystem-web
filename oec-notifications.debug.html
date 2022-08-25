@@ -29,7 +29,7 @@
 
     }
 
-    :is(code, .component-wrapper) {
+    :is(code, .component-wrapper, .app-container) {
       border: 1px solid #003B71;
       border-radius: 3px;
       border-top-width: 3px;
@@ -37,7 +37,8 @@
       border-top-right-radius: 5px;
     }
 
-    code {
+    code,
+    .app-container {
       padding: 20px;
       margin: 0;
       color: #003B71;
@@ -47,6 +48,11 @@
     .component-wrapper {
       height: 365px;
       width: 600px;
+    }
+
+    .selectable-apps {
+      column-count: 3;
+      column-gap: 30px;
     }
   </style>
 </head>
@@ -95,7 +101,83 @@
     <code><b>enabledApps</b> = ['ValuTrax', 'MyPriceLink', 'LinkIQ', 'EPCLink', 'DeliveryTrax', 'BackTrax']</code>
   </div>
 
+  <h3>Scenario 6. Update enabled apps.</h3>
+  <div class="grid">
+    <div class="component-wrapper">
+      <oec-notifications id="notifications-6"></oec-notifications>
+    </div>
+
+    <div class="app-container">
+      <span>Select any number of apps:</span>
+      <div class="selectable-apps">
+        <form onsubmit="return handleForm()" method="post">
+          <input type="checkbox" name="app" value="OpsTrax" id="app-opstrax">
+          <label for="app-opstrax">OpsTrax</label><br />
+
+          <input type="checkbox" name="app" value="DeliveryTrax" id="app-deliverytrax">
+          <label for="app-deliverytrax">DeliveryTrax</label><br />
+
+          <input type="checkbox" name="app" value="ValuTrax" id="app-valutrax">
+          <label for="app-valutrax">ValuTrax</label><br />
+
+          <input type="checkbox" name="app" value="BackTrax" id="app-backtrax">
+          <label for="app-backtrax">BackTrax</label><br />
+
+          <input type="checkbox" name="app" value="CollisionLink" id="app-collisionlink">
+          <label for="app-collisionlink">CollisionLink</label><br />
+
+          <input type="checkbox" name="app" value="RepairLink" id="app-repairlink">
+          <label for="app-repairlink">RepairLink</label><br />
+
+          <input type="checkbox" name="app" value="D2DLink" id="app-d2dlink">
+          <label for="app-d2dlink">D2DLink</label><br />
+
+          <input type="checkbox" name="app" value="D2DExpress" id="app-d2dlinkexpress">
+          <label for="app-d2dlinkexpress">D2DExpress</label><br />
+
+          <input type="checkbox" name="app" value="MyPriceLink" id="app-mypricelink">
+          <label for="app-mypricelink">MyPriceLink</label><br />
+
+          <input type="checkbox" name="app" value="LinkIQ" id="app-linkiq">
+          <label for="app-linkiq">LinkIQ</label><br />
+
+          <input type="checkbox" name="app" value="EPCLink" id="app-epclink">
+          <label for="app-epclink">EPCLink</label><br />
+
+          <input type="checkbox" name="app" value="ConsumerLink" id="app-consumerlink">
+          <label for="app-consumerlink">ConsumerLink</label><br />
+
+          <input type="checkbox" name="app" value="MarketPlaceDirect" id="app-marketplacedirect">
+          <label for="app-marketplacedirect">MarketPlaceDirect</label><br />
+
+          <input type="checkbox" name="app" value="PartsBrokerDirect" id="app-partsbrokerdirect">
+          <label for="app-partsbrokerdirect">PartsBrokerDirect</label><br />
+
+          <input type="submit" value="Update">
+        </form>
+      </div>
+    </div>
+  </div>
+
   <script>
+    selectedApps = [];
+
+    function handleForm() {
+      this.selectedApps = [];
+      let formData = new FormData(document.querySelector("form"));
+
+      for (let pair of formData.entries()) {
+        this.selectedApps.push(pair[1]);
+      }
+
+      console.log("this.selectedApps", this.selectedApps);
+
+      const notifications6 = document.querySelector('#notifications-6');
+      notifications6.enabledApps = this.selectedApps;
+
+      return false;
+    }
+
     const notifications1 = document.querySelector('#notifications-1');
     notifications1.enabledApps = ['OpsTrax', 'DeliveryTrax', 'ValuTrax',
       'BackTrax', 'CollisionLink', 'RepairLink', 'D2DLink',

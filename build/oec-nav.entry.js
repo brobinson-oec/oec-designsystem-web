@@ -1,9 +1,10 @@
-import { h, r as registerInstance, e as createEvent, f as Host } from './index-13f33587.js';
-import { S as Subject, R as ReplaySubject, m as merge, a as map, s as switchMap, o as of, d as delay, b as distinctUntilChanged, t as takeUntil, i as interval, c as shareReplay, e as scan } from './index-c55aa8a2.js';
-import './index-f1c6839d.js';
-import './oec-nav-menu-action-f6c4cc1c.js';
-import './oec-user-icon-1fc1f575.js';
-import { O as Overlay } from './Overlay-f62950a4.js';
+import { h, r as registerInstance, e as createEvent, f as Host } from './index-1f24ee20.js';
+import { R as ReplaySubject, i as interval, s as shareReplay, a as scan, d as distinctUntilChanged, t as takeUntil } from './index-7ddd6289.js';
+import './index-1afca086.js';
+import './oec-nav-menu-action-b6958d63.js';
+import './oec-user-icon-1a7712e5.js';
+import { O as Overlay } from './Overlay-a5402930.js';
+import { t as tooltip, p as popover } from './middleware-a13520b6.js';
 
 const MyIconBellSolid = (attrs) => (h("svg", Object.assign({ xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 448 512", fill: "currentColor" }, attrs),
   h("path", { d: "M256 32v19.2c73 14.83 128 79.4 128 156.8v18.8c0 47.1 17.3 92.4 48.5 127.6l7.4 8.3c8.4 9.5 10.5 22.9 5.3 34.4S428.6 416 416 416H32c-12.6 0-24.029-7.4-29.191-18.9-5.162-11.5-3.097-24.9 5.275-34.4l7.416-8.3C46.74 319.2 64 273.9 64 226.8V208c0-77.4 54.1-141.97 128-156.8V32c0-17.67 14.3-32 32-32s32 14.33 32 32zm-32 480c-17 0-33.3-6.7-45.3-18.7S160 464.1 160 448h128c0 16.1-6.7 33.3-18.7 45.3S240.1 512 224 512z" })));
@@ -21,77 +22,6 @@ const MyIconOecLogo = (attrs) => (h("svg", Object.assign({ viewBox: "0 0 134 28"
 
 const MyIconCircleQuestionRegular = (attrs) => (h("svg", Object.assign({ xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 512 512", fill: "currentColor" }, attrs),
   h("path", { d: "M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256 256-114.6 256-256S397.4 0 256 0zm0 464c-114.7 0-208-93.31-208-208S141.3 48 256 48s208 93.31 208 208-93.3 208-208 208zm0-128c-18 0-32 14-32 32s13.1 32 32 32c17.1 0 32-14 32-32s-14.9-32-32-32zm33.1-208H238c-39 0-70 31-70 70 0 13 11 24 24 24s24-11 24-24c0-12 9.1-22 21.1-22h51.1c12.9 0 23.8 10 23.8 22 0 8-4 14.1-11 18.1L244 251c-8 5-12 13-12 21v16c0 13 11 24 24 24s24-11 24-24v-2l45.1-28c21-13 34-36 34-60 .9-39-30.1-70-70-70z" })));
-
-function tooltip(configuration) {
-  const defaultConfig = { showDelay: 1000, hideDelay: 0 };
-  const config = Object.assign(Object.assign({}, defaultConfig), configuration);
-  return {
-    mergeOverlayConfig: { hasBackdrop: false },
-    // eslint-disable-next-line no-undef
-    register: (itemElement) => {
-      const update$ = new Subject();
-      const show$ = new Subject();
-      const hide$ = new Subject();
-      const destroy$ = new ReplaySubject(1);
-      const showTooltip = async () => {
-        show$.next();
-      };
-      const hideTooltip = async () => {
-        hide$.next();
-      };
-      merge(show$.pipe(map(() => true)), hide$.pipe(map(() => false)))
-        .pipe(switchMap(isExpectedToShow => of(isExpectedToShow).pipe(delay(isExpectedToShow ? config.showDelay : config.hideDelay))), distinctUntilChanged(), takeUntil(destroy$)).subscribe(async (isExpectedToShow) => {
-        if (isExpectedToShow) {
-          await itemElement.show();
-          update$.next();
-        }
-        else {
-          await itemElement.hide();
-        }
-      });
-      const events = [
-        ['mouseenter', showTooltip],
-        ['mouseleave', hideTooltip],
-        ['focus', showTooltip],
-        ['blur', hideTooltip]
-      ];
-      return {
-        update$,
-        events,
-        unsubscribe: () => {
-          update$.complete();
-          show$.complete();
-          hide$.complete();
-          destroy$.next();
-          destroy$.complete();
-        }
-      };
-    }
-  };
-}
-function popover() {
-  return {
-    mergeOverlayConfig: { hasBackdrop: true },
-    // eslint-disable-next-line no-undef
-    register: (itemElement) => {
-      const update$ = new Subject();
-      const showPopover = async () => {
-        await itemElement.show();
-        update$.next();
-      };
-      const events = [
-        ['click', showPopover]
-      ];
-      return {
-        update$,
-        events,
-        unsubscribe: () => {
-          update$.complete();
-        }
-      };
-    }
-  };
-}
 
 const oecNavCss = ":host{display:flex;flex:1;justify-content:space-between;padding:0;background-color:white;color:#003b71}:host .left{display:flex;justify-content:flex-start;align-items:center;padding-left:0.5rem;padding-right:0.5rem}:host .right{display:flex;justify-content:flex-end;align-items:center;position:relative}:host .vertical-divider{display:block;width:1px;height:30px;background-color:black;opacity:0.1}:host oec-nav-search{--oec-nav-search-padding-right:0rem;margin-right:-8px}:host .help,:host .notifications,:host .messages,:host oec-nav-search,:host .user-info{width:20px;height:30px}:host .bento{--oec-nav-menu-action-padding-left:1rem;height:30px}:host .bento-content{display:flex;flex-flow:row nowrap;align-items:center}:host .bento-content svg:first-child{height:30px;width:60px}:host .bento-content svg:last-child{margin-left:10px}";
 
@@ -138,7 +68,7 @@ const OecNav = class {
       }
       if (el.classList.contains('notifications')) {
         this.overlayRefs.push(await Overlay.attach(el, {
-          template: () => h("oec-notifications", { class: "notifications-popover-content" }),
+          template: () => h("oec-notifications", { class: "notifications-popover-content", enabledApps: this.enabledApps }),
           panelClass: 'popover-panel',
           hasBackdrop: true,
           hasArrow: true,
@@ -153,11 +83,6 @@ const OecNav = class {
       bufferSize: 1,
       refCount: true
     }));
-    // shared.pipe(
-    //   takeUntil(this.destroy$)
-    // ).subscribe(x => {
-    //   this.missedNotifications = x;
-    // });
     shared.pipe(scan((acc, value) => (value % 3) === 0 && value !== 0 ? (acc + 1) : acc, 0), // every 3 seconds
     distinctUntilChanged(), takeUntil(this.destroy$)).subscribe(x => {
       this.missedMessages = x;
@@ -171,7 +96,6 @@ const OecNav = class {
     this.destroy$.complete();
   }
   getChangedValue(event) {
-    console.log("totalNotificationsChanged", event);
     this.missedNotifications = event.detail;
   }
   render() {

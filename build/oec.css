@@ -9,10 +9,10 @@
 */
 :root {
   --app-primary-bg-color: #1f5593;
-  --app-secondary-text-color: #ffffff;
   --app-secondary-bg-color: #ffffff;
   --app-secondary-text-color: #b7c6d1;
   --app-secondary-border-color: #d5d6d8;
+  --app-font-family: "Open Sans", sans-serif;
 }
 
 .dark-backdrop {
@@ -28,7 +28,7 @@
 
 .nav-tooltip-panel {
   --oec-overlay-background: #222;
-  --oec-overlay-color: #FFF;
+  --oec-overlay-color: #fff;
   font-weight: normal;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 12px;
@@ -41,12 +41,15 @@
   width: 500px;
   height: 240px;
   padding: 10px 10px 0 10px;
+  background-color: #fff;
+  margin: 1px -5px -5px -5px;
+  color: #000;
 }
 
 .bento-viewall-dialog-panel {
   width: 500px;
   height: 300px;
-  background-color: #FFF;
+  background-color: #fff;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
