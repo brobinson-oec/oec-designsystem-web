@@ -38,9 +38,9 @@
   background-color: #FFF;
   margin: 1px -5px -5px -5px;
   color: #000;
-  width: 500px;
-  height: 240px;
-  padding: 10px 10px 0 10px;
+  width: min-content;
+  height: min-content;
+  padding: 0;
   background-color: #fff;
   margin: 1px -5px -5px -5px;
   color: #000;

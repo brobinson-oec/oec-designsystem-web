@@ -4078,7 +4078,7 @@ const OecAppLauncher = class {
     registerInstance(this, hostRef);
     this.appCardClicked = createEvent(this, "appCardClicked", 7);
     // keep there for story
-    this.enabledApps = [];
+    this.enabledApps = ["OPSTrax", "DeliveryTrax", "ValuTrax", "CollisionLink"];
     this.destroy$ = new ReplaySubject(1);
     this.viewAllVisible = false;
     this.hasOps = false;
@@ -4113,17 +4113,14 @@ const OecAppLauncher = class {
       .subscribe(data => {
       this.allowedApps$ = data;
       //
-      this.hasOps =
-        this.allowedApps$.filter(p => p.isOpsProduct && this.enabledApps.includes(p.name)).length > 0;
-      this.hasOec =
-        this.allowedApps$.filter(p => !p.isOpsProduct && this.enabledApps.includes(p.name)).length > 0;
+      this.hasOps = this.allowedApps$.filter(p => p.isOpsProduct && this.enabledApps.includes(p.name)).length > 0;
+      this.hasOec = this.allowedApps$.filter(p => !p.isOpsProduct && this.enabledApps.includes(p.name)).length > 0;
       this.oneColumn = !(this.hasOps && this.hasOec);
-      this.viewAllVisible =
-        this.enabledApps.length !== this.allowedApps$.length;
+      this.viewAllVisible = this.enabledApps.length !== this.allowedApps$.length;
     });
   }
   appTemplateRender(app) {
-    return this.enabledApps.includes(app.name) ? (h("oec-app-card", { onClick: this.onAppCardClicked(app.landingUrl), appDefinition: app })) : ("");
+    return this.enabledApps.includes(app.name) ? h("oec-app-card", { onClick: this.onAppCardClicked(app.landingUrl), appDefinition: app }) : "";
   }
   disconnectedCallback() {
     this.destroy$.next();
@@ -4140,9 +4137,7 @@ const OecAppLauncher = class {
         .filter(x => !this.enabledApps.includes(x.name))
         .sort(sortOrder)
     ];
-    return (h(Host, null, h("div", { class: this.oneColumn
-        ? "launcher-component one-column"
-        : "launcher-component" }, h("div", { class: "headWrapper" }, this.hasOps ? (h("header", { class: this.oneColumn ? "one-column" : "" }, h(OecOpsIcon, { style: this.iconStyleOps }))) : (""), this.hasOec ? (h("header", { class: this.oneColumn ? "one-column" : "" }, h(OecOecIcon, { style: this.iconStyleOec }))) : ("")), h("div", { class: "appsWrapper" }, h("div", { class: this.hasOps ? "products-column" : "hidden" }, getSortedItems(x => x.isOpsProduct).map(this.appTemplateRender.bind(this))), h("div", { class: this.hasOec ? "products-column" : "hidden" }, getSortedItems(x => !x.isOpsProduct).map(this.appTemplateRender.bind(this)))), this.viewAllVisible ? (h("div", { class: "view-all", onClick: this.handleViewAll }, "View All")) : (""))));
+    return (h(Host, null, h("div", { class: this.oneColumn ? "launcher-component one-column" : "launcher-component" }, h("div", { class: "headWrapper" }, this.hasOps ? (h("header", { class: this.oneColumn ? "one-column" : "" }, h(OecOpsIcon, { style: this.iconStyleOps }))) : (""), this.hasOec ? (h("header", { class: this.oneColumn ? "one-column" : "" }, h(OecOecIcon, { style: this.iconStyleOec }))) : ("")), h("div", { class: "appsWrapper" }, h("div", { class: this.hasOps ? "products-column" : "hidden" }, getSortedItems(x => x.isOpsProduct).map(this.appTemplateRender.bind(this))), h("div", { class: this.hasOec ? "products-column" : "hidden" }, getSortedItems(x => !x.isOpsProduct).map(this.appTemplateRender.bind(this)))), this.viewAllVisible ? (h("div", { class: "view-all", onClick: this.handleViewAll }, "View All")) : (""))));
   }
 };
 OecAppLauncher.style = oecAppLauncherCss;

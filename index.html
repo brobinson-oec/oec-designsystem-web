@@ -1,8 +1,25 @@
-<!doctype html><html dir="ltr" lang="en"><head> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"> <title>Stencil Component Starter</title> <script type="module" src="/build/oec.esm.js" data-stencil></script> <script nomodule="" src="/build/oec.js" data-stencil></script> <link rel="stylesheet" href="/build/oec.css"> <style>body {
-      background-color: rgba(246, 242, 243, 0.6);
+<!doctype html><html dir="ltr" lang="en"><head> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"> <title>Stencil Component Starter</title> <link rel="shortcut icon" href="./favicon.ico"> <script type="module" src="./build/oec.esm.js" data-stencil></script> <script nomodule="" src="./build/oec.js" data-stencil></script> <link rel="stylesheet" href="./build/oec.css"> <style>body {
+      background-color: #f6f2f399;
       margin: 0;
-      padding: 0;
-    }</style> </head> <body> <ul> <li><a href="/oec-nav.debug.html">oec-nav</a></li> <li><a href="/oec-app-launcher.debug.html">oec-app-launcher</a></li> <li><a href="/oec-notifications.debug.html">oec-notifications</a></li> </ul> <script>
+      padding: 20px;
+      font-family: 'Open Sans', sans-serif;
+      width: 900px;
+      margin: 0 auto;
+    }
+
+    a:any-link {
+      color: #05f;
+    }
+
+    h3 {
+      color: lightslategray;
+      margin-top: 3rem;
+    }
+
+    ul li::marker {
+      content: '🟆 ';
+      color: lightslategray;
+    }</style> </head> <body> <h3>OEC-Design System3 | Stencil debug pages | #9586</h3> <ul> <li><a href="./oec-nav.debug.html">Stencil | OEC Shared Navigation with AppLauncher / clickable Bento icon</a></li> <li><a href="/oec-app-launcher.debug.html">Stencil | AppLauncher</a></li> <li><a href="/oec-notifications.debug.html">Stencil | Notifications</a></li> </ul> <script>
 if ('serviceWorker' in navigator && location.protocol !== 'file:') {
   // auto-unregister service worker during dev mode
   navigator.serviceWorker.getRegistration().then(function(registration) {
