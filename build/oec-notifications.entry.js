@@ -3,7 +3,7 @@ import { s as sub } from './oec-notification-items-d0ba808f.js';
 import { R as ReplaySubject, g as from, t as takeUntil } from './index-7ddd6289.js';
 import './index-1afca086.js';
 import { O as Overlay } from './Overlay-a5402930.js';
-import { p as popover } from './middleware-a13520b6.js';
+import { t as tooltip, p as popover } from './middleware-a13520b6.js';
 
 const NOTIFICATIONS = [
   {
@@ -326,10 +326,12 @@ const OecNotifications = class {
     this.totalNotificationsChanged = createEvent(this, "totalNotificationsChanged", 7);
     this.dismissAllClicked = createEvent(this, "dismissAllClicked", 7);
     this.settingsClicked = createEvent(this, "settingsClicked", 7);
-    this.overlayRefs = [];
+    this.notifOverlayRefs = [];
     this.destroy$ = new ReplaySubject(1);
     this.notificationService = new NotificationService();
+    this.appListObserver = null;
     this.carouselOffset = 0;
+    this.appListWidth = 0;
     this.selectedApp = "";
     this.notifications = [];
     this.enabledApps = [];
@@ -342,10 +344,6 @@ const OecNotifications = class {
       });
       return totalNotifications;
     };
-    // private handleResize = (e) => {
-    //   console.log("app list resized", e);
-    //   //this.render();
-    // }
     this.moveRight = () => {
       if (!this.carouselOffset) {
         this.carouselOffset = 0;
@@ -357,26 +355,6 @@ const OecNotifications = class {
         this.carouselOffset = 0;
       }
       this.carouselOffset += 250;
-    };
-    this.atStartOfList = () => {
-      return this.carouselOffset === 0;
-    };
-    this.atEndOfList = () => {
-      const maxComponentWidth = 600;
-      let carouselWidth = this.notifications.length * 250;
-      const appList = this.el.shadowRoot.getElementById("ul-app");
-      if (appList) {
-        carouselWidth = appList.offsetWidth;
-      }
-      // If the length of the tabs is less than the viewable screen, disable the button
-      let isAtEndOfList = carouselWidth <= maxComponentWidth;
-      if (isAtEndOfList) {
-        return isAtEndOfList;
-      }
-      ;
-      isAtEndOfList =
-        Math.max(Math.abs(this.carouselOffset) + maxComponentWidth, maxComponentWidth) >= carouselWidth;
-      return isAtEndOfList;
     };
     this.changeSelectedApp = (appName) => {
       if (this.selectedApp) {
@@ -395,10 +373,16 @@ const OecNotifications = class {
       this.dismissAllClicked.emit();
     };
     this.showSettingsPopover = async (el) => {
-      this.overlayRefs.push(await Overlay.attach(el, {
+      this.notifOverlayRefs.push(await Overlay.attach(el, {
+        template: el.dataset.tooltip || '',
+        panelClass: 'mini-tooltip-panel',
+        hasArrow: true,
+        middleware: [tooltip()]
+      }));
+      this.notifOverlayRefs.push(await Overlay.attach(el, {
         template: () => h("oec-notifications-settings", null),
         panelClass: 'mini-menu-panel',
-        hasBackdrop: true,
+        hasBackdrop: false,
         hasArrow: false,
         middleware: [popover()]
       }));
@@ -423,10 +407,6 @@ const OecNotifications = class {
     });
   }
   componentShouldUpdate() {
-    // const element = this.el.shadowRoot.getElementById("ul-app");
-    // console.log("appListElement", element);
-    // this.appListObserver = new ResizeObserver((e) => this.handleResize(e));
-    // this.appListObserver.observe(element);
     from(this.notificationService.getAllNotificationsFromApps(this.enabledApps))
       .pipe(takeUntil(this.destroy$))
       .subscribe((x) => {
@@ -435,28 +415,76 @@ const OecNotifications = class {
         this.totalNotificationsChanged.emit(this.getTotalNotificationsCount());
       }
     });
+    return true;
   }
   disconnectedCallback() {
-    for (const overlay of this.overlayRefs) {
+    for (const overlay of this.notifOverlayRefs) {
       overlay.dispose();
     }
-    // if (this.appListObserver) {
-    //   this.appListObserver.disconnect();
-    // }
+    if (this.appListObserver) {
+      this.appListObserver.disconnect();
+    }
     this.destroy$.next();
     this.destroy$.complete();
   }
+  getSelectedApp() {
+    if (this.notifications.length === 0) {
+      return "";
+    }
+    if (this.selectedApp && this.selectedApp !== "") {
+      const isAppInList = this.notifications.filter((x) => {
+        return x.appName === this.selectedApp;
+      })[0];
+      if (isAppInList) {
+        return this.selectedApp;
+      }
+    }
+    const firstApp = this.notifications.sort(sortByMostUnread)[0];
+    this.selectedApp = firstApp["appName"];
+    return this.selectedApp;
+  }
+  atStartOfList() {
+    return this.carouselOffset === 0;
+  }
+  ;
+  atEndOfList() {
+    const maxComponentWidth = 600;
+    let carouselWidth = this.notifications.length * 370;
+    if (this.appListWidth > 0) {
+      carouselWidth = this.appListWidth;
+    }
+    // If the length of the tabs is less than the viewable screen, disable the button
+    let isAtEndOfList = carouselWidth <= maxComponentWidth;
+    if (isAtEndOfList) {
+      return isAtEndOfList;
+    }
+    ;
+    isAtEndOfList =
+      Math.max(Math.abs(this.carouselOffset) + maxComponentWidth, maxComponentWidth) >= carouselWidth;
+    return isAtEndOfList;
+  }
+  ;
   render() {
-    const selectedApp = this.notifications.filter((x) => {
-      return x.appName === this.selectedApp;
+    const appList = this.el.shadowRoot.getElementById("ul-app");
+    this.appListObserver = new ResizeObserver(entries => {
+      for (let entry of entries) {
+        this.appListWidth = entry.contentRect.width;
+      }
+    });
+    if (appList) {
+      this.appListObserver.observe(appList);
+    }
+    const selectedApp = this.getSelectedApp();
+    const app = this.notifications.filter((x) => {
+      return x.appName === selectedApp;
     })[0];
     let selectedAppNotifications = [];
     let selectedAppUrl = '';
-    if (selectedApp) {
-      selectedAppNotifications = selectedApp["notifications"];
-      selectedAppUrl = selectedApp["url"];
+    if (app) {
+      selectedAppNotifications = app["notifications"];
+      selectedAppUrl = app["url"];
     }
-    return (h(Host, null, h("div", { class: "header" }, h("span", { class: "title" }, h("strong", null, "Global Order Notifications")), h("div", { class: "notification-settings-container", ref: this.showSettingsPopover }, h(MyIconGearSolid, { class: "svg-icon gear" })), h("div", { class: "dismiss-all-container" }, h("button", { class: "dismiss-all", onClick: this.onDismissAllClicked, disabled: this.notifications.length === 0 }, "Dismiss All"))), h("div", { class: "body" }, this.notifications.length > 0 ? (h("div", { class: "apps" }, h("button", { class: "navigation-arrow-left", onClick: this.moveLeft, disabled: this.atStartOfList() }, h(MyIconChevronLeftSolid, { class: "svg-icon" })), h("div", { class: "nav-tabs-wrapper" }, h("ul", { class: "nav nav-tabs nav-justified", id: "ul-app", style: {
+    return (h(Host, null, h("div", { class: "header" }, h("span", { class: "title" }, h("strong", null, "Global Order Notifications")), h("div", { class: "notification-settings-container", "data-tooltip": "Settings", ref: this.showSettingsPopover }, h(MyIconGearSolid, { class: "svg-icon gear" })), h("div", { class: "dismiss-all-container" }, h("button", { class: "dismiss-all", onClick: this.onDismissAllClicked, disabled: this.notifications.length === 0 }, "Dismiss All"))), h("div", { class: "body" }, this.notifications.length > 0 ? (h("div", { class: "apps" }, h("button", { class: "navigation-arrow-left", onClick: this.moveLeft, disabled: this.atStartOfList() }, h(MyIconChevronLeftSolid, { class: "svg-icon" })), h("div", { class: "nav-tabs-wrapper" }, h("ul", { class: "nav nav-tabs nav-justified", id: "ul-app", style: {
         transform: "translateX(" + this.carouselOffset + "px)"
       } }, this.notifications
       .sort(sortByMostUnread)
