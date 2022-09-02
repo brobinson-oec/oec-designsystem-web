@@ -1,5 +1,5 @@
-import { h, r as registerInstance, e as createEvent, i as getAssetPath, f as Host, g as getElement } from './index-1f24ee20.js';
-import { s as sub } from './oec-notification-items-d0ba808f.js';
+import { h, r as registerInstance, e as createEvent, i as getAssetPath, f as Host, g as getElement } from './index-6b788f04.js';
+import { s as sub } from './oec-notification-items-ac46ac59.js';
 import { R as ReplaySubject, g as from, t as takeUntil } from './index-7ddd6289.js';
 import './index-1afca086.js';
 import { O as Overlay } from './Overlay-a5402930.js';
@@ -382,7 +382,7 @@ const OecNotifications = class {
       this.notifOverlayRefs.push(await Overlay.attach(el, {
         template: () => h("oec-notifications-settings", null),
         panelClass: 'mini-menu-panel',
-        hasBackdrop: false,
+        hasBackdrop: true,
         hasArrow: false,
         middleware: [popover()]
       }));
