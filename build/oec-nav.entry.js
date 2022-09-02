@@ -1,8 +1,8 @@
-import { h, r as registerInstance, e as createEvent, f as Host } from './index-6b788f04.js';
+import { h, r as registerInstance, e as createEvent, f as Host } from './index-1f24ee20.js';
 import { R as ReplaySubject, i as interval, s as shareReplay, a as scan, d as distinctUntilChanged, t as takeUntil } from './index-7ddd6289.js';
 import './index-1afca086.js';
-import './oec-nav-menu-action-942cb166.js';
-import './oec-user-icon-6fced584.js';
+import './oec-nav-menu-action-b6958d63.js';
+import './oec-user-icon-1a7712e5.js';
 import { O as Overlay } from './Overlay-a5402930.js';
 import { t as tooltip, p as popover } from './middleware-a13520b6.js';
 
