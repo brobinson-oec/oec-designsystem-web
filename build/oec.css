@@ -27,11 +27,18 @@
 }
 
 .nav-tooltip-panel {
-  --oec-overlay-background: #222;
+  --oec-overlay-background: #00507d;
   --oec-overlay-color: #fff;
   font-weight: normal;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--app-font-family);
   font-size: 12px;
+}
+
+.bento-popover-panel {
+  --oec-overlay-background: #00507d;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex: 1;
 }
 
 .bento-popover-content {

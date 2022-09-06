@@ -11,16 +11,37 @@
   <link rel="stylesheet" href="/build/oec.css" />
   <style>
     body {
-      background-color: rgba(246, 242, 243, 0.6);
+      background-color: #f6f2f3cc;
       margin: 0;
       padding: 0;
+    }
+
+    figure {
+      margin: 30px 0;
+      outline: auto;
+      outline-color: orange;
+    }
+
+    figure:hover {
+      outline-color: orangered;
+    }
+
+    .flex {
+      display: flex;
+      justify-content: end;
+    }
+
+    h3 {
+      color: lightslategray;
+      margin-top: 3rem;
+      text-align: center;
     }
   </style>
 </head>
 
 <body>
   <oec-nav user-id="abc123">
-    <svg slot="brand" viewBox="0 0 134 28" xmlns="http://www.w3.org/2000/svg" style="height: 25px; width: 50px;">
+    <svg slot="brand" viewBox="0 0 134 28" xmlns="http://www.w3.org/2000/svg" style="height: 30px; width: 60px;">
       <path
         d="M64.4274867,14.0041067 C64.4274867,7.65137333 59.8905533,4.67590667 53.8663533,4.67590667 C47.8407533,4.67590667 43.3042867,7.65137333 43.3042867,14.0041067 C43.3042867,21.4805733 48.93042,23.5133733 53.8663533,23.5133733 C58.8008867,23.5133733 64.4274867,21.4805733 64.4274867,14.0041067 M53.8663533,0.247706667 C65.47982,0.247706667 69.5813533,7.07084 69.5813533,14.2943733 C69.5813533,19.7725733 66.35062,27.94064 53.8663533,27.94064 C41.3806867,27.94064 38.1499533,19.7725733 38.1499533,14.2943733 C38.1499533,7.07084 42.2519533,0.247706667 53.8663533,0.247706667"
         fill="#003B71"></path>
@@ -68,6 +89,17 @@
       console.log('search', e);
     });
   </script>
+
+  <br />
+
+  <h3>⮬ Live OEC-NAV Component ⮭</h3>
+  <br /><br />
+  <h3>⮮ Latest mock for OEC-NAV Component from UX Team ⮯</h3>
+  <div class="flex">
+    <figure>
+      <img src="./assets/oec-nav-mock.png" alt="" />
+    </figure>
+  </div>
 </body>
 
 </html>
