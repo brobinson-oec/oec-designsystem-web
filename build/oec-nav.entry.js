@@ -1,10 +1,10 @@
-import { h, r as registerInstance, e as createEvent, f as Host } from './index-6b788f04.js';
-import { R as ReplaySubject } from './index-b7be4d6b.js';
-import './oec-nav-menu-action-5d15d702.js';
-import './oec-user-icon-a8445c92.js';
-import { O as Overlay } from './Overlay-643f6b2d.js';
-import { t as tooltip, p as popover } from './middleware-fcc1c878.js';
-import './index-55538d60.js';
+import { h, r as registerInstance, e as createEvent, f as Host } from './index-1f24ee20.js';
+import { S as Subject, R as ReplaySubject, m as merge, a as map, s as switchMap, o as of, d as delay, b as distinctUntilChanged, t as takeUntil } from './index-6faee293.js';
+import './oec-nav-menu-action-db0365d2.js';
+import './oec-user-icon-cc7ef9f2.js';
+import { O as Overlay } from './Overlay-bfc675f2.js';
+import './index-c1978730.js';
+import './UserProfileService-69351221.js';
 
 const NotificationIcon = (attrs) => (h("svg", Object.assign({ xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 20 16", fill: "currentColor" }, attrs),
   h("path", { d: "M9.96,15.87c.98,.12,1.88-.58,2.01-1.56h-3.57c.1,.82,.74,1.46,1.56,1.56ZM14.73,6.61h0v-.05c-.01-.17-.02-.35-.02-.54v-.04c-.27-1.9-1.64-3.46-3.48-3.98,.24-.39,.25-.88,.02-1.28-.35-.59-1.1-.79-1.69-.44s-.79,1.1-.44,1.69c-1.91,.47-3.34,2.05-3.6,4,0,6.26-1.92,6.22-1.92,6.22v1.66h13.03v-1.66s-1.78,.04-1.91-5.58Z" })));
@@ -30,6 +30,77 @@ const SupportIcon = (attrs) => (h("svg", Object.assign({ xmlns: "http://www.w3.o
         h("path", { transform: "translate(-37.301 -30)", d: "M41.433,40.4a1.053,1.053,0,0,1-1.05-1.05,3.612,3.612,0,0,1,2.556-3.466,1.507,1.507,0,0,0,1.086-1.506,2.311,2.311,0,1,0-4.623,0,1.05,1.05,0,0,1-2.1,0A4.485,4.485,0,0,1,41.748,30a4.379,4.379,0,0,1,4.377,4.377,3.612,3.612,0,0,1-2.556,3.466,1.507,1.507,0,0,0-1.086,1.506,1.075,1.075,0,0,1-1.049,1.05Z", "data-name": "Path 290" }),
         h("path", { transform: "translate(-42.629 -50.991)", d: "m48.021 63.56a1.26 1.26 0 1 1-2.521 0 1.26 1.26 0 0 1 2.521 0", "data-name": "Path 291" }))))));
 
+function tooltip(configuration) {
+  const defaultConfig = { showDelay: 1000, hideDelay: 0 };
+  const config = Object.assign(Object.assign({}, defaultConfig), configuration);
+  return {
+    mergeOverlayConfig: { hasBackdrop: false },
+    // eslint-disable-next-line no-undef
+    register: (itemElement) => {
+      const update$ = new Subject();
+      const show$ = new Subject();
+      const hide$ = new Subject();
+      const destroy$ = new ReplaySubject(1);
+      const showTooltip = async () => {
+        show$.next();
+      };
+      const hideTooltip = async () => {
+        hide$.next();
+      };
+      merge(show$.pipe(map(() => true)), hide$.pipe(map(() => false)))
+        .pipe(switchMap(isExpectedToShow => of(isExpectedToShow).pipe(delay(isExpectedToShow ? config.showDelay : config.hideDelay))), distinctUntilChanged(), takeUntil(destroy$)).subscribe(async (isExpectedToShow) => {
+        if (isExpectedToShow) {
+          await itemElement.show();
+          update$.next();
+        }
+        else {
+          await itemElement.hide();
+        }
+      });
+      const events = [
+        ['mouseenter', showTooltip],
+        ['mouseleave', hideTooltip],
+        ['focus', showTooltip],
+        ['blur', hideTooltip]
+      ];
+      return {
+        update$,
+        events,
+        unsubscribe: () => {
+          update$.complete();
+          show$.complete();
+          hide$.complete();
+          destroy$.next();
+          destroy$.complete();
+        }
+      };
+    }
+  };
+}
+function popover() {
+  return {
+    mergeOverlayConfig: { hasBackdrop: true },
+    // eslint-disable-next-line no-undef
+    register: (itemElement) => {
+      const update$ = new Subject();
+      const showPopover = async () => {
+        await itemElement.show();
+        update$.next();
+      };
+      const events = [
+        ['click', showPopover]
+      ];
+      return {
+        update$,
+        events,
+        unsubscribe: () => {
+          update$.complete();
+        }
+      };
+    }
+  };
+}
+
 const oecNavCss = ":host{display:flex;flex:1;justify-content:space-between;padding:0;background-color:white;color:#00507d;height:44px;--oec-nav-menu-action-margin:0.5rem;}:host div.button{margin:0 3px}:host .left{display:flex;justify-content:flex-start;align-items:center;padding-left:0.5rem;padding-right:0.5rem}:host .left svg{width:22px;height:22px}:host .right{display:flex;justify-content:flex-end;align-items:center;position:relative}:host .right svg{width:22px;height:22px}:host .vertical-divider{display:block;width:1px;height:42px;background-color:lightslategray;opacity:0.3;margin:0 15px}:host oec-nav-locate{margin-right:-4px}:host .help,:host .notifications,:host .messages,:host oec-nav-search,:host .user-info{width:30px;height:30px}:host .bento{height:30px}:host .bento-content{display:flex;flex-flow:row nowrap;align-items:center}:host .bento-content svg:first-child{margin-right:var(--oec-nav-menu-action-margin)}:host .bento-content svg:last-child{margin:0 var(--oec-nav-menu-action-margin);align-items:center}";
 
 const OecNav = class {
@@ -45,6 +116,7 @@ const OecNav = class {
     this.missedMessages = 0;
     this.userId = "";
     this.enabledApps = []; // Doesn't support converters.
+    this.currentApp = "";
     this.onBentoClicked = async () => {
       this.bentoClicked.emit();
     };
@@ -76,6 +148,15 @@ const OecNav = class {
       if (el.classList.contains('notifications')) {
         this.overlayRefs.push(await Overlay.attach(el, {
           template: () => h("oec-notifications", { class: "notifications-popover-content", enabledApps: this.enabledApps }),
+          panelClass: 'popover-panel',
+          hasBackdrop: true,
+          hasArrow: true,
+          middleware: [popover()]
+        }));
+      }
+      if (el.classList.contains('user-info')) {
+        this.overlayRefs.push(await Overlay.attach(el, {
+          template: () => h("oec-user-info", { class: "user-info-popover-content", currentApp: this.currentApp, userId: this.userId }),
           panelClass: 'popover-panel',
           hasBackdrop: true,
           hasArrow: true,

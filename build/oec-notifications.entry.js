@@ -1,9 +1,7 @@
-import { h, r as registerInstance, e as createEvent, i as getAssetPath, f as Host, g as getElement } from './index-6b788f04.js';
-import { s as sub } from './oec-notification-items-4cbe6359.js';
-import { R as ReplaySubject, f as from, t as takeUntil } from './index-b7be4d6b.js';
-import './index-55538d60.js';
-import { O as Overlay } from './Overlay-643f6b2d.js';
-import { t as tooltip, p as popover } from './middleware-fcc1c878.js';
+import { h, r as registerInstance, e as createEvent, i as getAssetPath, f as Host, g as getElement } from './index-1f24ee20.js';
+import { s as sub } from './oec-notification-items-f65f02bc.js';
+import { R as ReplaySubject, f as from, t as takeUntil } from './index-6faee293.js';
+import './index-c1978730.js';
 
 const NOTIFICATIONS = [
   {
@@ -311,6 +309,9 @@ const ThumbsUpIcon = (attrs) => (h("svg", Object.assign({ "data-name": "Layer 1"
 
 const oecNotificationsCss = ":host{display:flex;flex:1;flex-flow:column nowrap;font-family:Open Sans, sans-serif;overflow-y:hidden}:host .header{background:#fff;display:block}:host .title{text-transform:uppercase;font-size:1rem;padding:10px;float:left}:host .notification-settings-container{padding:5px;margin:5px 5px 5px 0;float:right}:host .notification-settings-container:hover{background-color:#dddddd;border:0px solid #dddddd;border-radius:4px;cursor:pointer;transition:all 100ms ease-out}:host .dismiss-all{font-family:Open Sans, sans-serif;font-size:0.8rem;border:none;background-color:#fff;padding:5px;margin:5px 5px 5px 0;float:right}:host .dismiss-all:hover{background-color:#dddddd;border:0px solid #dddddd;border-radius:4px;cursor:pointer;transition:all 100ms ease-out}:host .dismiss-all:disabled{border:none;background-color:#fff;cursor:default}:host .svg-icon{height:15px;width:15px}:host .svg-icon.gear{fill:#00507d}:host .empty-body{text-align:center;display:grid;justify-content:center;align-items:center;padding:80px}:host .svg-icon-thumb{height:100px;width:100px;margin:auto;fill:#ddd}:host .apps{border-top:1px solid #e2e2e2;display:flex}:host .nav-tabs-wrapper{background-color:#ececec;display:flex;flex:96%;overflow:hidden}:host .nav.nav-tabs.nav-justified{display:flex;flex:96%;flex-flow:nowrap;list-style-type:none;margin:0;padding:0;background-color:#ececec;transition:transform 150ms ease-out;z-index:3}:host .nav-tabs.nav-justified>li{float:left}:host .nav-tabs.nav-justified>li:not(:last-child){border-right:1px solid #e2e2e2}:host .nav-tabs.nav-justified>li:hover{background-color:#fff;cursor:pointer}:host .nav-tabs.nav-justified>li.app-tab.active{background-color:#fff;border:none;border-radius:0}:host .nav-tabs.nav-justified>li>div{border-radius:0;color:#a7a7a7;display:inline-flex;font-size:14px;padding:10px;text-decoration:none;text-align:center;justify-content:center;transition:background-color 100ms ease-out}:host .nav-tabs.nav-justified>li>div>.app-logo{align-self:center;vertical-align:middle}:host .nav-tabs.nav-justified>li>div>.app-logo:not(.opstrax){transform:scale(0.75)}:host .nav-tabs.nav-justified>li>div>span.badge-content{background-color:#f44336;border:3px solid #f44336;border-radius:50%;color:#fff;display:inline-block;font-size:14px;font-weight:600;height:25px;line-height:25px;margin-left:5px;text-align:center;text-overflow:ellipsis;transform:scale(0.8);white-space:nowrap;width:25px;vertical-align:middle}:host .navigation-arrow-left,:host .navigation-arrow-right{flex:2%;text-align:center;background:#dddddd;border:none;border-bottom:1px solid #e2e2e2;transition:transform 150ms linear;z-index:30}:host .navigation-arrow-left:hover,:host .navigation-arrow-right:hover{background-color:#fff;cursor:pointer}:host .navigation-arrow-left:disabled,:host .navigation-arrow-right:disabled{background:#ececec;cursor:default}";
 
+//import Overlay from '../../oec-overlay/Overlay';
+//import { OverlayRef } from '../../oec-overlay/Overlay.types';
+//import { popover, tooltip } from '../../oec-overlay/middleware';
 function sortByMostUnread(a, b) {
   if (a.notifications.length > b.notifications.length) {
     return -1;
@@ -326,7 +327,7 @@ const OecNotifications = class {
     this.totalNotificationsChanged = createEvent(this, "totalNotificationsChanged", 7);
     this.dismissAllClicked = createEvent(this, "dismissAllClicked", 7);
     this.settingsClicked = createEvent(this, "settingsClicked", 7);
-    this.notifOverlayRefs = [];
+    //private readonly notifOverlayRefs: OverlayRef[] = [];
     this.destroy$ = new ReplaySubject(1);
     this.notificationService = new NotificationService();
     this.appListObserver = null;
@@ -372,21 +373,6 @@ const OecNotifications = class {
     this.onDismissAllClicked = () => {
       this.dismissAllClicked.emit();
     };
-    this.showSettingsPopover = async (el) => {
-      this.notifOverlayRefs.push(await Overlay.attach(el, {
-        template: el.dataset.tooltip || '',
-        panelClass: 'mini-tooltip-panel',
-        hasArrow: true,
-        middleware: [tooltip()]
-      }));
-      this.notifOverlayRefs.push(await Overlay.attach(el, {
-        template: () => h("oec-notifications-settings", null),
-        panelClass: 'mini-menu-panel',
-        hasBackdrop: true,
-        hasArrow: false,
-        middleware: [popover()]
-      }));
-    };
   }
   appTemplateRender(notification) {
     const unreadNotifications = notification.notifications.length;
@@ -418,9 +404,9 @@ const OecNotifications = class {
     return true;
   }
   disconnectedCallback() {
-    for (const overlay of this.notifOverlayRefs) {
-      overlay.dispose();
-    }
+    // for (const overlay of this.notifOverlayRefs) {
+    //   overlay.dispose();
+    // }
     if (this.appListObserver) {
       this.appListObserver.disconnect();
     }
@@ -464,6 +450,22 @@ const OecNotifications = class {
     return isAtEndOfList;
   }
   ;
+  // private showSettingsPopover = async (el: HTMLElement) => {
+  //   this.notifOverlayRefs.push(
+  //     await Overlay.attach(el, {
+  //       template: el.dataset.tooltip || '',
+  //       panelClass: 'mini-tooltip-panel',
+  //       hasArrow: true,
+  //       middleware: [tooltip()]
+  //     }));
+  //   this.notifOverlayRefs.push(await Overlay.attach(el, {
+  //     template: () => <oec-notifications-settings></oec-notifications-settings>,
+  //     panelClass: 'mini-menu-panel',
+  //     hasBackdrop: true,
+  //     hasArrow: false,
+  //     middleware: [popover()]
+  //   }));
+  // }
   render() {
     const appList = this.el.shadowRoot.getElementById("ul-app");
     this.appListObserver = new ResizeObserver(entries => {
@@ -484,7 +486,7 @@ const OecNotifications = class {
       selectedAppNotifications = app["notifications"];
       selectedAppUrl = app["url"];
     }
-    return (h(Host, null, h("div", { class: "header" }, h("span", { class: "title" }, h("strong", null, "Global Order Notifications")), h("div", { class: "notification-settings-container", "data-tooltip": "Settings", ref: this.showSettingsPopover }, h(GearIcon, { class: "svg-icon gear" })), h("div", { class: "dismiss-all-container" }, h("button", { class: "dismiss-all", onClick: this.onDismissAllClicked, disabled: this.notifications.length === 0 }, "Dismiss All"))), h("div", { class: "body" }, this.notifications.length > 0 ? (h("div", { class: "apps" }, h("button", { class: "navigation-arrow-left", onClick: this.moveLeft, disabled: this.atStartOfList() }, h(ChevronLeftIcon, { class: "svg-icon" })), h("div", { class: "nav-tabs-wrapper" }, h("ul", { class: "nav nav-tabs nav-justified", id: "ul-app", style: {
+    return (h(Host, null, h("div", { class: "header" }, h("span", { class: "title" }, h("strong", null, "Global Order Notifications")), h("div", { class: "notification-settings-container", "data-tooltip": "Settings" }, " ", h(GearIcon, { class: "svg-icon gear" })), h("div", { class: "dismiss-all-container" }, h("button", { class: "dismiss-all", onClick: this.onDismissAllClicked, disabled: this.notifications.length === 0 }, "Dismiss All"))), h("div", { class: "body" }, this.notifications.length > 0 ? (h("div", { class: "apps" }, h("button", { class: "navigation-arrow-left", onClick: this.moveLeft, disabled: this.atStartOfList() }, h(ChevronLeftIcon, { class: "svg-icon" })), h("div", { class: "nav-tabs-wrapper" }, h("ul", { class: "nav nav-tabs nav-justified", id: "ul-app", style: {
         transform: "translateX(" + this.carouselOffset + "px)"
       } }, this.notifications
       .sort(sortByMostUnread)

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+    <title>Stencil Component Starter</title>
+
+    <script type="module" src="/build/oec.esm.js"></script>
+    <script nomodule src="/build/oec.js"></script>
+    <style>
+        body {
+            background-color: #fff;
+            margin: 0;
+            padding: 20px;
+            font-family: 'Open Sans', sans-serif;
+            width: 300px;
+            margin: 0 auto;
+        }
+
+        h3 {
+            color: lightslategray;
+            margin-top: 3rem;
+        }
+
+        .grid {
+            display: grid;
+            gap: 30px;
+
+        }
+
+        :is(code, .component-wrapper, .app-container) {
+            border: 1px solid #003B71;
+            border-radius: 3px;
+            border-top-width: 3px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+
+        code,
+        .app-container {
+            padding: 20px;
+            margin: 0;
+            color: #003B71;
+        }
+
+        .app-container {
+            width: 560px;
+        }
+
+        .component-wrapper {
+            height: min-content;
+            width: 300px;
+        }
+
+        .selectable-apps {
+            column-count: 3;
+            column-gap: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>Scenario 1. User on an OEC app.</h3>
+    <div class="grid">
+        <div class="component-wrapper">
+            <oec-user-info id="user-info-1"></oec-user-info>
+        </div>
+        <code><b>currentApp</b> = 'CollisionLink'</code>
+    </div>
+
+    <h3>Scenario 2. User on an OPS app.</h3>
+    <div class="grid">
+        <div class="component-wrapper">
+            <oec-user-info id="user-info-2"></oec-user-info>
+        </div>
+        <code><b>enabledApps</b> = ['OpsTrax']</code>
+    </div>
+
+    <h3>Scenario 3. Update current app.</h3>
+    <div class="grid">
+        <div class="component-wrapper">
+            <oec-user-info id="user-info-3"></oec-user-info>
+        </div>
+
+        <div class="app-container">
+            <span>Select any app:</span>
+            <div class="selectable-apps">
+                <form onsubmit="return handleForm()" method="post">
+                    <input type="radio" name="app" value="OpsTrax" id="app-opstrax">
+                    <label for="app-opstrax">OpsTrax</label><br />
+
+                    <input type="radio" name="app" value="DeliveryTrax" id="app-deliverytrax">
+                    <label for="app-deliverytrax">DeliveryTrax</label><br />
+
+                    <input type="radio" name="app" value="ValuTrax" id="app-valutrax">
+                    <label for="app-valutrax">ValuTrax</label><br />
+
+                    <input type="radio" name="app" value="BackTrax" id="app-backtrax">
+                    <label for="app-backtrax">BackTrax</label><br />
+
+                    <input type="radio" name="app" value="CollisionLink" id="app-collisionlink">
+                    <label for="app-collisionlink">CollisionLink</label><br />
+
+                    <input type="radio" name="app" value="RepairLink" id="app-repairlink">
+                    <label for="app-repairlink">RepairLink</label><br />
+
+                    <input type="radio" name="app" value="D2DLink" id="app-d2dlink">
+                    <label for="app-d2dlink">D2DLink</label><br />
+
+                    <input type="radio" name="app" value="D2DExpress" id="app-d2dlinkexpress">
+                    <label for="app-d2dlinkexpress">D2DExpress</label><br />
+
+                    <input type="radio" name="app" value="MyPriceLink" id="app-mypricelink">
+                    <label for="app-mypricelink">MyPriceLink</label><br />
+
+                    <input type="radio" name="app" value="LinkIQ" id="app-linkiq">
+                    <label for="app-linkiq">LinkIQ</label><br />
+
+                    <input type="radio" name="app" value="EPCLink" id="app-epclink">
+                    <label for="app-epclink">EPCLink</label><br />
+
+                    <input type="radio" name="app" value="ConsumerLink" id="app-consumerlink">
+                    <label for="app-consumerlink">ConsumerLink</label><br />
+
+                    <input type="radio" name="app" value="MarketPlaceDirect" id="app-marketplacedirect">
+                    <label for="app-marketplacedirect">MarketPlaceDirect</label><br />
+
+                    <input type="radio" name="app" value="PartsBrokerDirect" id="app-partsbrokerdirect">
+                    <label for="app-partsbrokerdirect">PartsBrokerDirect</label><br />
+
+                    <input type="submit" value="Update">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        selectedApps = [];
+
+        function handleForm() {
+            const userInfo3 = document.querySelector('#user-info-3');
+            userInfo3.currentApp = document.querySelector('input[name="app"]:checked').value;
+            return false;
+        }
+
+        const userInfo3 = document.querySelector('#user-info-3');
+        userInfo3.userId = "abc123";
+
+        const userInfo1 = document.querySelector('#user-info-1');
+        userInfo1.currentApp = "CollisionLink";
+        userInfo1.userId = "abc123";
+
+        const userInfo2 = document.querySelector('#user-info-2');
+        userInfo2.currentApp = "OpsTrax";
+        userInfo2.userId = "abc123";
+    </script>
+</body>
+
+</html>

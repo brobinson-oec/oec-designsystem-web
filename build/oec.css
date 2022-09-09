@@ -70,3 +70,12 @@
   height: 364px;
   padding: 5px 0 0 0;
 }
+
+.user-info-popover-content {
+  background-color: #FFF;
+  margin: 1px -5px -5px -5px;
+  color: #000;
+  width: 300px;
+  height: min-content;
+  padding: 5px;
+}
