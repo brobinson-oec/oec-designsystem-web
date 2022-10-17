@@ -1,8 +1,8 @@
 import { h, r as registerInstance, e as createEvent, f as Host } from './index-1f24ee20.js';
-import { R as ReplaySubject, f as from, t as takeUntil } from './index-6faee293.js';
-import './index-c1978730.js';
-import { m as myContainer, T as TYPES } from './inversify.config-74d84e0a.js';
-import { O as Overlay } from './Overlay-bfc675f2.js';
+import { R as ReplaySubject, l as forkJoin, f as from, t as takeUntil } from './index-73b9da7f.js';
+import './index-b727d372.js';
+import { m as myContainer, T as TYPES } from './inversify.config-46a3801b.js';
+import { O as Overlay } from './Overlay-5fb3f86c.js';
 
 const OecOecIcon = (attrs) => (h("svg", Object.assign({ xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 35 35" }, attrs),
   h("path", { d: "M22.91,6.38c0,2.93-2.37,5.3-5.3,5.3s-5.3-2.37-5.3-5.3S14.69,1.09,17.62,1.09s5.3,2.37,5.3,5.3Z", fill: "#54565a" }),
@@ -39,6 +39,9 @@ const OecOpsIcon = (attrs) => (h("svg", Object.assign({ xmlns: "http://www.w3.or
           h("path", { fill: "#1a2848", d: "M18.17,19.76l-.5,1.33c-.14,.42-.15,.74-.03,.95h-3.48c.28-.22,.5-.54,.67-.95l1.67-4.49c.14-.41,.15-.72,.04-.94h6.19c1.47,0,1.78,.42,1.53,1.24l-.58,1.5c-.37,.83-.82,1.36-2.48,1.36h-3.04Zm.4-1.06h1.46c.7,0,.73-.1,.97-.6l.17-.44c.32-.73-.05-.73-.33-.73h-1.61l-.66,1.78Z" }),
           h("path", { fill: "#1a2848", d: "M33.51,15.66l-.6,1.41c-.18-.16-1.07-.15-.99-.15h-2.51c-.13,0-.41,0-.45,0-.2,0-.35,.08-.43,.25-.06,.14-.15,.38-.16,.41-.06,.16,.14,.2,.26,.2,.02,0,2.29,0,2.75,0,0,0,1.45,0,1,1.27l-.65,1.68c-.55,1.39-.86,1.31-1.97,1.31h-5.85l.61-1.58c.18,.1,.45,.19,.63,.22,.18,.03,.52,.04,1.02,.04h2.2c.35,0,.4,0,.48-.02,.13-.03,.18-.14,.2-.18,.02-.06,.17-.43,.2-.5,.09-.24-.15-.24-.29-.24h-2.14c-.54,0-.46,0-.76,0-.59,0-1.23-.01-.87-1.04l.7-1.76c.18-.44,.48-1.32,2.49-1.32h5.14Z" })))))));
 
+const CloseIcon = (attrs) => (h("svg", Object.assign({ viewBox: "0 0 25 25", xmlns: "http://www.w3.org/2000/svg" }, attrs),
+  h("path", { transform: "translate(-9.898 -9.289)", d: "M25.457,9.646l-6.091,6.091L13.274,9.646a1.169,1.169,0,0,0-1.677,0l-1.346,1.346a1.169,1.169,0,0,0,0,1.677l6.091,6.091-6.067,6.067a1.169,1.169,0,0,0,0,1.677l1.346,1.346a1.169,1.169,0,0,0,1.677,0l6.067-6.115,6.091,6.091a1.169,1.169,0,0,0,1.677,0l1.346-1.346a1.169,1.169,0,0,0,0-1.677l-6.115-6.067,6.091-6.091a1.169,1.169,0,0,0,0-1.677L27.11,9.622a1.162,1.162,0,0,0-1.653.024Z", fill: "#6a7b95" })));
+
 const oecAppLauncherCss = ":host{display:block;font-family:var(--app-font-family);color:#000}:host *{box-sizing:border-box}:host .hidden{display:none}:host .launcher-component{max-width:430px;min-width:min-content;box-shadow:1px 1px 4px rgba(119, 136, 153, 0.4);background-color:#fff;border-radius:3px}:host .launcher-component.one-column{width:209px}:host .launcher-component .headWrapper{display:flex;width:100%;border-bottom:1px solid #cecece;padding-top:3px}:host .launcher-component .headWrapper header{text-align:center;width:50%;min-width:min-content;padding:3px;vertical-align:middle}:host .launcher-component .headWrapper header.one-column{width:100%}:host .launcher-component .appsWrapper{display:flex;font-size:12px;padding:6px 0;height:370px;overflow-y:auto;overflow-x:hidden}:host .launcher-component .appsWrapper::-webkit-scrollbar{width:6px;height:6px}:host .launcher-component .appsWrapper::-webkit-scrollbar-track{background:#f3f3f3}:host .launcher-component .appsWrapper::-webkit-scrollbar-thumb{background:#e1e1e1;border-radius:6px}:host .launcher-component .appsWrapper:hover::-webkit-scrollbar-thumb{background:#cecece}:host .launcher-component .appsWrapper .products-column{width:209px;min-width:min-content}:host .launcher-component .view-all{width:100%;border-top:1px solid #cecece;font-size:13.5px;padding:6px 0;color:#00507d;text-align:center}:host .launcher-component .view-all:hover{background-color:#e1e1e1;cursor:pointer}";
 
 function sortOrder(a, b) {
@@ -55,8 +58,12 @@ const OecAppLauncher = class {
     registerInstance(this, hostRef);
     this.appCardClicked = createEvent(this, "appCardClicked", 7);
     // keep there for story
-    this.enabledApps = ["OPSTrax", "DeliveryTrax", "ValuTrax", "CollisionLink"];
+    this.enabledApps = []; //["OPSTrax", "DeliveryTrax", "ValuTrax", "CollisionLink"];
+    this.enabledAppsLowerCase = this.enabledApps.map(element => {
+      return element.toLowerCase();
+    });
     this.destroy$ = new ReplaySubject(1);
+    this.allowedApps$ = [];
     this.viewAllVisible = false;
     this.hasOps = false;
     this.hasOec = false;
@@ -66,9 +73,9 @@ const OecAppLauncher = class {
     this.onAppCardClicked = (url) => () => {
       this.appCardClicked.emit(url);
     };
-    this.handleViewAll = async (ev) => {
-      const ref = await Overlay.attach(ev.target, {
-        template: ({ hide }) => (h("div", null, h("button", { onClick: hide }, "close"))),
+    this.handleViewAll = async (evt) => {
+      const ref = await Overlay.attach(evt.target, {
+        template: ({ hide }) => (h("div", null, h("button", { onClick: hide, class: "btn-modal-close" }, h(CloseIcon, null)), h("oec-app-view-all", { unsubscribedApps: this.unsubscribedApps$ }))),
         panelClass: "bento-viewall-dialog-panel",
         backdropClass: "dark-backdrop",
         hasBackdrop: true,
@@ -85,19 +92,21 @@ const OecAppLauncher = class {
     this.appService = myContainer.get(TYPES.IAppService);
   }
   connectedCallback() {
-    from(this.appService.getAppListing())
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(data => {
-      this.allowedApps$ = data;
-      //
-      this.hasOps = this.allowedApps$.filter(p => p.isOpsProduct && this.enabledApps.includes(p.name)).length > 0;
-      this.hasOec = this.allowedApps$.filter(p => !p.isOpsProduct && this.enabledApps.includes(p.name)).length > 0;
+    forkJoin([
+      from(this.appService.getAppListing()),
+      from(this.appService.getUnsubscribedAppListing())
+    ]).pipe(takeUntil(this.destroy$))
+      .subscribe(([allowedApps, unsubscribedApps]) => {
+      this.allowedApps$ = allowedApps;
+      this.unsubscribedApps$ = unsubscribedApps;
+      this.hasOps = this.allowedApps$.filter(a => a.isOpsProduct && this.enabledAppsLowerCase.includes(a.name.toLocaleLowerCase())).length > 0;
+      this.hasOec = this.allowedApps$.filter(a => !a.isOpsProduct && this.enabledAppsLowerCase.includes(a.name.toLocaleLowerCase())).length > 0;
       this.oneColumn = !(this.hasOps && this.hasOec);
-      this.viewAllVisible = this.enabledApps.length !== this.allowedApps$.length;
+      this.viewAllVisible = this.enabledAppsLowerCase.length !== this.allowedApps$.length;
     });
   }
   appTemplateRender(app) {
-    return this.enabledApps.includes(app.name) ? h("oec-app-card", { onClick: this.onAppCardClicked(app.landingUrl), appDefinition: app }) : "";
+    return this.enabledAppsLowerCase.includes(app.name.toLocaleLowerCase()) ? (h("oec-app-card", { onClick: this.onAppCardClicked(app.landingUrl), appDefinition: app })) : ("");
   }
   disconnectedCallback() {
     this.destroy$.next();
@@ -107,11 +116,11 @@ const OecAppLauncher = class {
     const getSortedItems = (columnFilter) => [
       ...this.allowedApps$
         .filter(columnFilter)
-        .filter(x => this.enabledApps.includes(x.name))
+        .filter(x => this.enabledAppsLowerCase.includes(x.name))
         .sort(sortOrder),
       ...this.allowedApps$
         .filter(columnFilter)
-        .filter(x => !this.enabledApps.includes(x.name))
+        .filter(x => !this.enabledAppsLowerCase.includes(x.name))
         .sort(sortOrder)
     ];
     return (h(Host, null, h("div", { class: this.oneColumn ? "launcher-component one-column" : "launcher-component" }, h("div", { class: "headWrapper" }, this.hasOps ? (h("header", { class: this.oneColumn ? "one-column" : "" }, h(OecOpsIcon, { style: this.iconStyleOps }))) : (""), this.hasOec ? (h("header", { class: this.oneColumn ? "one-column" : "" }, h(OecOecIcon, { style: this.iconStyleOec }))) : ("")), h("div", { class: "appsWrapper" }, h("div", { class: this.hasOps ? "products-column" : "hidden" }, getSortedItems(x => x.isOpsProduct).map(this.appTemplateRender.bind(this))), h("div", { class: this.hasOec ? "products-column" : "hidden" }, getSortedItems(x => !x.isOpsProduct).map(this.appTemplateRender.bind(this)))), this.viewAllVisible ? (h("div", { class: "view-all", onClick: this.handleViewAll }, "View All")) : (""))));

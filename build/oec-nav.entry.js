@@ -1,10 +1,10 @@
 import { h, r as registerInstance, e as createEvent, f as Host } from './index-1f24ee20.js';
-import { S as Subject, R as ReplaySubject, m as merge, a as map, s as switchMap, o as of, d as delay, b as distinctUntilChanged, t as takeUntil } from './index-6faee293.js';
-import './oec-nav-menu-action-db0365d2.js';
-import './oec-user-icon-cc7ef9f2.js';
-import { O as Overlay } from './Overlay-bfc675f2.js';
-import './index-c1978730.js';
-import './UserProfileService-69351221.js';
+import { S as Subject, R as ReplaySubject, m as merge, a as map, s as switchMap, o as of, d as delay, b as distinctUntilChanged, t as takeUntil } from './index-73b9da7f.js';
+import './oec-nav-menu-action-d3c44e70.js';
+import './oec-user-icon-e3e2bcc8.js';
+import { O as Overlay } from './Overlay-5fb3f86c.js';
+import './index-b727d372.js';
+import './UserProfileService-ea1aea9c.js';
 
 const NotificationIcon = (attrs) => (h("svg", Object.assign({ xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 20 16", fill: "currentColor" }, attrs),
   h("path", { d: "M9.96,15.87c.98,.12,1.88-.58,2.01-1.56h-3.57c.1,.82,.74,1.46,1.56,1.56ZM14.73,6.61h0v-.05c-.01-.17-.02-.35-.02-.54v-.04c-.27-1.9-1.64-3.46-3.48-3.98,.24-.39,.25-.88,.02-1.28-.35-.59-1.1-.79-1.69-.44s-.79,1.1-.44,1.69c-1.91,.47-3.34,2.05-3.6,4,0,6.26-1.92,6.22-1.92,6.22v1.66h13.03v-1.66s-1.78,.04-1.91-5.58Z" })));
@@ -112,14 +112,15 @@ const OecNav = class {
     this.bentoClicked = createEvent(this, "bentoClicked", 7);
     this.overlayRefs = [];
     this.destroy$ = new ReplaySubject(1);
+    this.userId = "";
+    // Doesn't support converters.
+    this.enabledApps = [];
+    this.currentApp = "";
+    // Do not bind this with html attributes. Set with code.
+    this.isOpstraxUser = false;
+    this.locateOems = [];
     this.missedNotifications = 0;
     this.missedMessages = 0;
-    this.userId = "";
-    this.enabledApps = []; // Doesn't support converters.
-    this.currentApp = "";
-    this.onBentoClicked = async () => {
-      this.bentoClicked.emit();
-    };
     this.onHelpClick = () => {
       this.helpClicked.emit();
     };
@@ -128,6 +129,9 @@ const OecNav = class {
     };
     this.onMessagesClicked = () => {
       this.messagesClicked.emit();
+    };
+    this.onBentoClicked = async () => {
+      this.bentoClicked.emit();
     };
     this.attachMenuItemBehaviors = async (el) => {
       this.overlayRefs.push(await Overlay.attach(el, {
@@ -138,26 +142,26 @@ const OecNav = class {
       }));
       if (el.classList.contains("bento")) {
         this.overlayRefs.push(await Overlay.attach(el, {
-          template: () => h("oec-app-launcher", { class: "bento-popover-content" }),
-          panelClass: 'popover-panel',
+          template: () => (h("oec-app-launcher", { class: "bento-popover-content", enabledApps: this.enabledApps })),
+          panelClass: "popover-panel",
           hasBackdrop: true,
           hasArrow: true,
           middleware: [popover()]
         }));
       }
-      if (el.classList.contains('notifications')) {
+      if (el.classList.contains("notifications")) {
         this.overlayRefs.push(await Overlay.attach(el, {
-          template: () => h("oec-notifications", { class: "notifications-popover-content", enabledApps: this.enabledApps }),
-          panelClass: 'popover-panel',
+          template: () => (h("oec-notifications", { class: "notifications-popover-content", enabledApps: this.enabledApps })),
+          panelClass: "popover-panel",
           hasBackdrop: true,
           hasArrow: true,
           middleware: [popover()]
         }));
       }
-      if (el.classList.contains('user-info')) {
+      if (el.classList.contains("messages")) {
         this.overlayRefs.push(await Overlay.attach(el, {
-          template: () => h("oec-user-info", { class: "user-info-popover-content", currentApp: this.currentApp, userId: this.userId }),
-          panelClass: 'popover-panel',
+          template: () => (h("oec-alerts", { class: "alerts-popover-content", userId: this.userId })),
+          panelClass: "popover-panel",
           hasBackdrop: true,
           hasArrow: true,
           middleware: [popover()]
@@ -165,7 +169,6 @@ const OecNav = class {
       }
     };
   }
-  // Do not bind this with html attributes. Set with code.
   connectedCallback() {
     /* const shared = interval(1000).pipe(
       shareReplay({
@@ -198,11 +201,21 @@ const OecNav = class {
   getChangedValue(event) {
     this.missedNotifications = event.detail;
   }
+  getAlertChangedValue(event) {
+    this.missedMessages = event.detail;
+  }
+  hasD2DLink() {
+    const found = this.enabledApps.find(element => {
+      return element.toLowerCase() === "d2dlink";
+    });
+    return found !== undefined;
+  }
   render() {
+    var _a;
     const styles1 = { width: "22px", height: "22px" };
     const styles2 = { width: "25px", height: "25px" };
     const oecIconStyles = { width: "60px" };
-    return (h(Host, null, h("div", { class: "left" }, h("slot", { name: "brand" })), h("div", { class: "right" }, h("oec-nav-menu-action", { class: "search", isClickable: false, "data-tooltip": "Parts Locator", ref: this.attachMenuItemBehaviors }, h("oec-nav-locate", { slot: "icon" })), h("oec-nav-menu-action", { class: "help", "data-tooltip": "Support", onClick: this.onHelpClick, ref: this.attachMenuItemBehaviors }, h(SupportIcon, { slot: "icon", style: styles1 })), h("oec-nav-menu-action", { class: "notifications", "data-tooltip": "Notifications", badgeTotal: this.missedNotifications, onClick: this.onNotificationsClicked, ref: this.attachMenuItemBehaviors }, h(NotificationIcon, { slot: "icon", style: styles2 })), h("oec-nav-menu-action", { class: "messages", "data-tooltip": "Alerts", badgeTotal: this.missedMessages, onClick: this.onMessagesClicked, ref: this.attachMenuItemBehaviors }, h(AlertsIcon, { slot: "icon", style: styles2 })), h("oec-nav-menu-action", { class: "user-info", "data-tooltip": "User Info", isClickable: false, ref: this.attachMenuItemBehaviors }, h("oec-user-icon", { slot: "icon", style: styles2, userId: this.userId })), h("div", { class: "vertical-divider" }), h("oec-nav-menu-action", { class: "bento", onClick: this.onBentoClicked, "data-tooltip": "App Launcher", ref: this.attachMenuItemBehaviors }, h("div", { slot: "icon", class: "bento-content" }, h(OecLogo, { focusable: "false", style: oecIconStyles }), h(BentoMenu, { focusable: "false", style: styles1 }))))));
+    return (h(Host, null, h("div", { class: "left" }, h("slot", { name: "brand" })), h("div", { class: "right" }, ((_a = this.locateOems) === null || _a === void 0 ? void 0 : _a.length) > 0 && this.hasD2DLink() ? (h("oec-nav-menu-action", { class: "search", isClickable: false, "data-tooltip": "Parts Locator", ref: this.attachMenuItemBehaviors }, h("oec-nav-locate", { slot: "icon", locateOems: this.locateOems }))) : (""), h("oec-nav-menu-action", { class: "help", "data-tooltip": "Support", onClick: this.onHelpClick, ref: this.attachMenuItemBehaviors }, h(SupportIcon, { slot: "icon", style: styles1 })), h("oec-nav-menu-action", { class: "notifications", "data-tooltip": "Notifications", badgeTotal: this.missedNotifications, onClick: this.onNotificationsClicked, ref: this.attachMenuItemBehaviors }, h(NotificationIcon, { slot: "icon", style: styles2 })), this.isOpstraxUser ? (h("div", { class: "empty-body" }, h("oec-nav-menu-action", { class: "messages", "data-tooltip": "Alerts", badgeTotal: this.missedMessages, onClick: this.onMessagesClicked, ref: this.attachMenuItemBehaviors }, h(AlertsIcon, { slot: "icon", style: styles2 })))) : (""), h("oec-nav-menu-action", { class: "user-info", "data-tooltip": "User Info", isClickable: false, ref: this.attachMenuItemBehaviors }, h("oec-user-icon", { slot: "icon", style: styles2, userId: this.userId })), h("div", { class: "vertical-divider" }), h("oec-nav-menu-action", { class: "bento", onClick: this.onBentoClicked, "data-tooltip": "App Launcher", ref: this.attachMenuItemBehaviors }, h("div", { slot: "icon", class: "bento-content" }, h(OecLogo, { focusable: "false", style: oecIconStyles }), h(BentoMenu, { focusable: "false", style: styles1 }))))));
   }
 };
 OecNav.style = oecNavCss;

@@ -74,22 +74,22 @@
       <oec-app-launcher id="launcher04"></oec-app-launcher>
     </div>
     <pre>
-<b class="big">Code:</b>     
+    <b class="big">Code:</b>     
 
-<b>CSS</b>
-.launcher-wrapper {
-  width: min-content;
-  /* ... */
-}      
-<b>HTML</b>
-&lt;div class="launcher-wrapper">
-  &lt;oec-app-launcher>&lt;/oec-app-launcher>
-&lt;/div>
+    <b>CSS</b>
+    .launcher-wrapper {
+      width: min-content;
+      /* ... */
+    }      
+    <b>HTML</b>
+    &lt;div class="launcher-wrapper">
+      &lt;oec-app-launcher>&lt;/oec-app-launcher>
+    &lt;/div>
 
-<code><b>enabledApps</b> = ["OPSTrax", "DeliveryTrax", "ValuTrax", 
-  "BackTrax", "CollisionLink", "RepairLink", "D2DLink", 
-  "D2DExpress", "MyPriceLink", "LinkIQ", "EPCLink", "ConsumerLink"]</code>
-</pre>
+    <code><b>enabledApps</b> = ["OPSTrax", "DeliveryTrax", "ValuTrax", 
+      "BackTrax", "CollisionLink", "RepairLink", "D2DLink", 
+      "D2DExpress", "MyPriceLink", "LinkIQ", "EPCLink", "ConsumerLink"]</code>
+    </pre>
   </div>
 
   <h3 id="s1">Scenario 1. Generic. A user subscribed to up to 9 OEC and up to 9 OPS products</h3>
@@ -133,12 +133,12 @@
     &lt;oec-app-launcher>&lt;/oec-app-launcher>
   &lt;/div>
 
-<code><b>enabledApps</b> = ["CollisionLink", "D2DLink", "LinkIQ", "MyPriceLink", "EPCLink"]</code>
+    <code><b>enabledApps</b> = ["CollisionLink", "D2DLink", "LinkIQ", "MyPriceLink", "EPCLink"]</code>
     </pre>
   </div>
 
-
   <script>
+    
     const launcher4 = document.querySelector('#launcher04');
     launcher4.enabledApps = ["OPSTrax", "DeliveryTrax", "ValuTrax",
       "BackTrax", "CollisionLink", "RepairLink", "D2DLink",

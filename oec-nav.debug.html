@@ -10,37 +10,108 @@
   <script nomodule src="/build/oec.js"></script>
   <link rel="stylesheet" href="/build/oec.css" />
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+
     body {
-      background-color: #f6f2f3cc;
+      background-color: whitesmoke;
       margin: 0;
       padding: 0;
+      font-family: var(--app-font-family);
+      color: #252d42;
     }
 
-    figure {
-      margin: 30px 0;
-      outline: auto;
-      outline-color: orange;
+    2 a:any-link {
+      color: #04c;
     }
 
-    figure:hover {
-      outline-color: orangered;
+    .fas {
+      font-size: 11pt
     }
 
-    .flex {
-      display: flex;
-      justify-content: end;
-    }
-
-    h3 {
-      color: lightslategray;
+    :where(h2, h3, h4) {
+      color: slategray;
       margin-top: 3rem;
-      text-align: center;
+      transform: scale(1, 1.2);
+      font-weight: 600;
+    }
+
+    em {
+      color: lightslategray;
+      font-weight: 400;
+    }
+
+    .display {
+      margin-left: 400px;
+      font-size: smaller;
+    }
+
+    oec-nav {
+      border-top: 1px solid var(--ops-primary-bg-color);
+      border-bottom: 15px solid var(--ops-primary-bg-color);
+    }
+
+    .info {
+      border: 1px solid gainsboro;
+      border-radius: 7px;
+      padding: 15px;
+      width: 800px;
+      margin: 0 auto;
+      background-color: white;
+      font-size: 11pt;
+    }
+
+    .info h2,
+    .info h3 {
+      margin-top: 0;
+    }
+
+    ol li::marker {
+      color: crimson;
+      font-weight: bold;
+    }
+
+    dd {
+      font-size: 10pt;
+    }
+
+    summary {
+      cursor: pointer;
     }
   </style>
+  <script src="https://kit.fontawesome.com/5100b98cc5.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-  <oec-nav user-id="abc123">
+
+  <!-- I. SCENARIO -->
+  <div class="display">
+
+    <h3>I. SCENARIO: Dealer not enrolled with D2DLink</h3>
+    <p>
+      userId="abc123"; <em>// {id: "abc123", displayName: "Joe McDonald"}</em>
+      <br />
+      enabledApps = ['OPSTrax', 'DeliveryTrax', 'ValuTrax', 'CollisionLink', 'LinkIQ', 'MyPriceLink',
+      'OEC EPC']
+      <br />
+      locateOems = []
+    </p>
+    <details>
+      <summary>Note: there is a possibility of 2 sub scenarios</summary>
+      <ol>
+        <li>User does not have D2DLink, but has subscription for Locate OEM</li>
+        <i>For example: user was previously subscribed to D2DLink, then canceled the subscription. When we removed this
+          subscription we left the
+          subscription for D2DLink OEMs. This is unlikely scenario, but shit happens.</i>
+        <li>User has D2DLink, but does not have locate permissions for any OEM</li>
+        <i>Totally unlikely scenario, but again...</i>
+      </ol>
+      <p>Both conditions should be met: <b>No D2DLink</b> subscription AND <b>no locate OEMs</b>.
+      </p>
+    </details>
+    <br />
+  </div>
+
+  <oec-nav user-id="abc123" locate-oems="data">
     <svg slot="brand" viewBox="0 0 134 28" xmlns="http://www.w3.org/2000/svg" style="height: 30px; width: 60px;">
       <path
         d="M64.4274867,14.0041067 C64.4274867,7.65137333 59.8905533,4.67590667 53.8663533,4.67590667 C47.8407533,4.67590667 43.3042867,7.65137333 43.3042867,14.0041067 C43.3042867,21.4805733 48.93042,23.5133733 53.8663533,23.5133733 C58.8008867,23.5133733 64.4274867,21.4805733 64.4274867,14.0041067 M53.8663533,0.247706667 C65.47982,0.247706667 69.5813533,7.07084 69.5813533,14.2943733 C69.5813533,19.7725733 66.35062,27.94064 53.8663533,27.94064 C41.3806867,27.94064 38.1499533,19.7725733 38.1499533,14.2943733 C38.1499533,7.07084 42.2519533,0.247706667 53.8663533,0.247706667"
@@ -68,13 +139,127 @@
         fill="#003B71"></path>
     </svg>
   </oec-nav>
-  <script>
-    const nav = document.querySelector('oec-nav');
-    nav.enabledApps = ['OpsTrax', 'DeliveryTrax', 'ValuTrax',
+
+  <!-- II. SCENARIO -->
+
+  <div class="display">
+    <h3>II. SCENARIO: D2DLink dealer enrolled with single OEM for part searches</h3>
+    <p>
+      userId="abc456"; <em>// {id: "abc456", displayName: "Ivan Terrible"}</em>
+      <br />
+      enabledApps = ['OpsTrax', 'DeliveryTrax', 'ValuTrax',
       'BackTrax', 'CollisionLink', 'RepairLink', 'D2DLink',
-      'D2DExpress', 'MyPriceLink', 'LinkIQ', 'EPCLink', 'ConsumerLink', 'MarketPlaceDirect', 'PartsBrokerDirect'];
-    nav.currentApp = "CollisionLink";
-    nav.userId = "abc123";
+      'D2DExpress', 'MyPriceLink', 'LinkIQ', 'ConsumerLink', 'MarketPlaceDirect', 'PartsBrokerDirect'];
+      <br />
+      locateOems = [{ oemId: 2, catalogId: 2, oemName: 'Ford' }]
+    </p>
+  </div>
+
+  <oec-nav user-id="abc456" locate-oems="">
+    <svg slot="brand" viewBox="0 0 134 28" xmlns="http://www.w3.org/2000/svg" style="height: 30px; width: 60px;">
+      <path
+        d="M64.4274867,14.0041067 C64.4274867,7.65137333 59.8905533,4.67590667 53.8663533,4.67590667 C47.8407533,4.67590667 43.3042867,7.65137333 43.3042867,14.0041067 C43.3042867,21.4805733 48.93042,23.5133733 53.8663533,23.5133733 C58.8008867,23.5133733 64.4274867,21.4805733 64.4274867,14.0041067 M53.8663533,0.247706667 C65.47982,0.247706667 69.5813533,7.07084 69.5813533,14.2943733 C69.5813533,19.7725733 66.35062,27.94064 53.8663533,27.94064 C41.3806867,27.94064 38.1499533,19.7725733 38.1499533,14.2943733 C38.1499533,7.07084 42.2519533,0.247706667 53.8663533,0.247706667"
+        fill="#003B71"></path>
+      <polygon fill="#003B71"
+        points="72.4038933 0.900993333 96.0676267 0.900993333 96.0676267 5.32919333 77.5568267 5.32919333 77.5568267 11.46306 93.4906933 11.46306 93.4906933 15.89126 77.5568267 15.89126 77.5568267 22.8595267 96.5030267 22.8595267 96.5030267 27.2867933 72.4038933 27.2867933">
+      </polygon>
+      <path
+        d="M127.1235,17.8869133 C126.614833,20.8269133 124.510167,27.94078 112.387567,27.94078 C104.0403,27.94078 97.4710333,23.2946467 97.4710333,13.6771133 C97.4710333,5.98318 102.298233,0.247846667 112.786567,0.247846667 C124.582967,0.247846667 126.325033,7.90584667 126.7245,9.32171333 L121.570167,9.32171333 C121.279433,8.41451333 119.2471,4.67558 113.076367,4.67558 C105.782367,4.67558 102.733167,8.77711333 102.733167,14.2576467 C102.733167,20.31918 107.124967,23.5135133 112.786567,23.5135133 C118.811233,23.5135133 121.460967,19.91878 121.969167,17.8869133 L127.1235,17.8869133 Z"
+        fill="#003B71"></path>
+      <path
+        d="M130.28036,2.71660667 C130.713427,2.71660667 131.10076,2.68627333 131.10076,2.16734 C131.10076,1.74920667 130.720893,1.67220667 130.366227,1.67220667 L129.668093,1.67220667 L129.668093,2.71660667 L130.28036,2.71660667 Z M129.668093,4.61314 L129.158493,4.61314 L129.158493,1.23820667 L130.44276,1.23820667 C131.240293,1.23820667 131.634627,1.53267333 131.634627,2.19814 C131.634627,2.80200667 131.255693,3.06520667 130.759627,3.12727333 L131.720493,4.61314 L131.146493,4.61314 L130.257493,3.15060667 L129.668093,3.15060667 L129.668093,4.61314 Z M130.288293,5.36400667 C131.612227,5.36400667 132.65616,4.32660667 132.65616,2.91820667 C132.65616,1.53267333 131.612227,0.487806667 130.288293,0.487806667 C128.948493,0.487806667 127.90456,1.53267333 127.90456,2.91820667 C127.90456,4.32660667 128.948493,5.36400667 130.288293,5.36400667 L130.288293,5.36400667 Z M127.31516,2.91820667 C127.31516,1.23820667 128.67736,0.00014 130.288293,0.00014 C131.882893,0.00014 133.24556,1.23820667 133.24556,2.91820667 C133.24556,4.61314 131.882893,5.85167333 130.288293,5.85167333 C128.67736,5.85167333 127.31516,4.61314 127.31516,2.91820667 L127.31516,2.91820667 Z"
+        fill="#003B71"></path>
+      <path
+        d="M17.75466,4.81385333 C17.75466,7.19338667 15.8263933,9.12025333 13.44826,9.12025333 C11.0701267,9.12025333 9.14139333,7.19338667 9.14139333,4.81385333 C9.14139333,2.43665333 11.0701267,0.50792 13.44826,0.50792 C15.8263933,0.50792 17.75466,2.43665333 17.75466,4.81385333"
+        fill="#55565A"></path>
+      <path
+        d="M26.8966133,14.0041067 C26.8966133,16.3813067 24.9683467,18.30864 22.5897467,18.30864 C20.2111467,18.30864 18.28288,16.3813067 18.28288,14.0041067 C18.28288,11.6245733 20.2111467,9.69630667 22.5897467,9.69630667 C24.9683467,9.69630667 26.8966133,11.6245733 26.8966133,14.0041067"
+        fill="#55565A"></path>
+      <path
+        d="M17.7548933,23.11092 C17.7548933,25.4899867 15.8266267,27.41732 13.4480267,27.41732 C11.07036,27.41732 9.14162667,25.4899867 9.14162667,23.11092 C9.14162667,20.7313867 11.07036,18.8035867 13.4480267,18.8035867 C15.8266267,18.8035867 17.7548933,20.7313867 17.7548933,23.11092"
+        fill="#55565A"></path>
+      <path
+        d="M8.61322,14.0013533 C8.61322,16.3794867 6.68495333,18.30822 4.30682,18.30822 C1.92822,18.30822 -4.66666672e-05,16.3794867 -4.66666672e-05,14.0013533 C-4.66666672e-05,11.6222867 1.92822,9.69542 4.30682,9.69542 C6.68495333,9.69542 8.61322,11.6222867 8.61322,14.0013533"
+        fill="#003B71"></path>
+    </svg>
+  </oec-nav>
+
+  <!-- III. SCENARIO -->
+
+  <div class="display">
+    <h3>III. SCENARIO: D2DLink multi-OEM dealer enrolled for part searches</h3>
+    <p>
+      userId="xyz123"; <em>// {id: "xyz123", displayName: "Allan Street"}</em>
+      <br />
+      enabledApps = ['OpsTrax', 'ValuTrax', 'CollisionLink', 'RepairLink', 'D2DLink'];
+      <br />
+      locateOems = [{ oemId: 2, catalogId: 2, oemName: 'Ford' },{ oemId: 3, catalogId: 3, oemName: 'GM' }]
+    </p>
+  </div>
+
+  <oec-nav user-id="xyz123" locate-oems="data">
+    <svg slot="brand" viewBox="0 0 134 28" xmlns="http://www.w3.org/2000/svg" style="height: 30px; width: 60px;">
+      <path
+        d="M64.4274867,14.0041067 C64.4274867,7.65137333 59.8905533,4.67590667 53.8663533,4.67590667 C47.8407533,4.67590667 43.3042867,7.65137333 43.3042867,14.0041067 C43.3042867,21.4805733 48.93042,23.5133733 53.8663533,23.5133733 C58.8008867,23.5133733 64.4274867,21.4805733 64.4274867,14.0041067 M53.8663533,0.247706667 C65.47982,0.247706667 69.5813533,7.07084 69.5813533,14.2943733 C69.5813533,19.7725733 66.35062,27.94064 53.8663533,27.94064 C41.3806867,27.94064 38.1499533,19.7725733 38.1499533,14.2943733 C38.1499533,7.07084 42.2519533,0.247706667 53.8663533,0.247706667"
+        fill="#003B71"></path>
+      <polygon fill="#003B71"
+        points="72.4038933 0.900993333 96.0676267 0.900993333 96.0676267 5.32919333 77.5568267 5.32919333 77.5568267 11.46306 93.4906933 11.46306 93.4906933 15.89126 77.5568267 15.89126 77.5568267 22.8595267 96.5030267 22.8595267 96.5030267 27.2867933 72.4038933 27.2867933">
+      </polygon>
+      <path
+        d="M127.1235,17.8869133 C126.614833,20.8269133 124.510167,27.94078 112.387567,27.94078 C104.0403,27.94078 97.4710333,23.2946467 97.4710333,13.6771133 C97.4710333,5.98318 102.298233,0.247846667 112.786567,0.247846667 C124.582967,0.247846667 126.325033,7.90584667 126.7245,9.32171333 L121.570167,9.32171333 C121.279433,8.41451333 119.2471,4.67558 113.076367,4.67558 C105.782367,4.67558 102.733167,8.77711333 102.733167,14.2576467 C102.733167,20.31918 107.124967,23.5135133 112.786567,23.5135133 C118.811233,23.5135133 121.460967,19.91878 121.969167,17.8869133 L127.1235,17.8869133 Z"
+        fill="#003B71"></path>
+      <path
+        d="M130.28036,2.71660667 C130.713427,2.71660667 131.10076,2.68627333 131.10076,2.16734 C131.10076,1.74920667 130.720893,1.67220667 130.366227,1.67220667 L129.668093,1.67220667 L129.668093,2.71660667 L130.28036,2.71660667 Z M129.668093,4.61314 L129.158493,4.61314 L129.158493,1.23820667 L130.44276,1.23820667 C131.240293,1.23820667 131.634627,1.53267333 131.634627,2.19814 C131.634627,2.80200667 131.255693,3.06520667 130.759627,3.12727333 L131.720493,4.61314 L131.146493,4.61314 L130.257493,3.15060667 L129.668093,3.15060667 L129.668093,4.61314 Z M130.288293,5.36400667 C131.612227,5.36400667 132.65616,4.32660667 132.65616,2.91820667 C132.65616,1.53267333 131.612227,0.487806667 130.288293,0.487806667 C128.948493,0.487806667 127.90456,1.53267333 127.90456,2.91820667 C127.90456,4.32660667 128.948493,5.36400667 130.288293,5.36400667 L130.288293,5.36400667 Z M127.31516,2.91820667 C127.31516,1.23820667 128.67736,0.00014 130.288293,0.00014 C131.882893,0.00014 133.24556,1.23820667 133.24556,2.91820667 C133.24556,4.61314 131.882893,5.85167333 130.288293,5.85167333 C128.67736,5.85167333 127.31516,4.61314 127.31516,2.91820667 L127.31516,2.91820667 Z"
+        fill="#003B71"></path>
+      <path
+        d="M17.75466,4.81385333 C17.75466,7.19338667 15.8263933,9.12025333 13.44826,9.12025333 C11.0701267,9.12025333 9.14139333,7.19338667 9.14139333,4.81385333 C9.14139333,2.43665333 11.0701267,0.50792 13.44826,0.50792 C15.8263933,0.50792 17.75466,2.43665333 17.75466,4.81385333"
+        fill="#55565A"></path>
+      <path
+        d="M26.8966133,14.0041067 C26.8966133,16.3813067 24.9683467,18.30864 22.5897467,18.30864 C20.2111467,18.30864 18.28288,16.3813067 18.28288,14.0041067 C18.28288,11.6245733 20.2111467,9.69630667 22.5897467,9.69630667 C24.9683467,9.69630667 26.8966133,11.6245733 26.8966133,14.0041067"
+        fill="#55565A"></path>
+      <path
+        d="M17.7548933,23.11092 C17.7548933,25.4899867 15.8266267,27.41732 13.4480267,27.41732 C11.07036,27.41732 9.14162667,25.4899867 9.14162667,23.11092 C9.14162667,20.7313867 11.07036,18.8035867 13.4480267,18.8035867 C15.8266267,18.8035867 17.7548933,20.7313867 17.7548933,23.11092"
+        fill="#55565A"></path>
+      <path
+        d="M8.61322,14.0013533 C8.61322,16.3794867 6.68495333,18.30822 4.30682,18.30822 C1.92822,18.30822 -4.66666672e-05,16.3794867 -4.66666672e-05,14.0013533 C-4.66666672e-05,11.6222867 1.92822,9.69542 4.30682,9.69542 C6.68495333,9.69542 8.61322,11.6222867 8.61322,14.0013533"
+        fill="#003B71"></path>
+    </svg>
+  </oec-nav>
+
+  <br />
+
+  <div class="info">
+    <h3>Tips for testing in DEV environment:</h3>
+
+    <ol>
+      <li>Login into <a target="_blank" href="https://portal.oecdev.oeconnection.com/">OEC DealerPortal <i
+            class="fas fa-external-link-alt"></i></a> &nbsp; with the dealer account which has <b>Ford</b> and/or
+        <b>GM</b> locate permissions (e.g. nada6/nada6)
+      </li>
+      <li>Come back to this page and test scenarios II and/or III.</li>
+      <dd><b>Ford parts:</b> 1L2Z7826553AA, 936596625, 951321450</dd>
+      <dd><b>GM parts:</b> 91177558, 12173362</dd>
+      <li>The expected result: new browser tab containing D2DLink Locate Results should open.</li>
+    </ol>
+  </div>
+
+
+  <script>
+
+    //setting up multiple navigation components 
+    const nav = document.querySelector('oec-nav[user-id="abc123"]');
+    const nav2 = document.querySelector('oec-nav[user-id="abc456"]');
+    const nav3 = document.querySelector('oec-nav[user-id="xyz123"]');
+    // const devLocateUrl = "https://portal.oecdev.oeconnection.com/#!/D2DLink/Console";
+    const devLocateUrl = "https://portal.oecdev.oeconnection.com/d2dlinkdealer/";
+
+    // setting up locate OEMs
+    const locateOem2 = { oemId: 2, catalogId: 2, oemName: "Ford" };
+    const locateOem3 = { oemId: 3, catalogId: 3, oemName: "GM" };
+
+    //nav(1)
+    nav.locateOems = [{ oemId: 2, catalogId: 2, oemName: "Ford" }];
+    nav.enabledApps = ['OPSTrax', 'DeliveryTrax', 'ValuTrax', 'CollisionLink', 'LinkIQ', 'MyPriceLink', 'OEC EPC']
     nav.addEventListener("notificationsClicked", (e) => {
       console.log('notificationsClicked', e);
     });
@@ -90,18 +275,53 @@
     nav.addEventListener("search", (e) => {
       console.log('search', e);
     });
+
+    /* nav2 */
+    nav2.locateOems = [{ oemId: 2, catalogId: 2, oemName: 'Ford' }];
+    nav2.enabledApps = ['OpsTrax', 'DeliveryTrax', 'ValuTrax',
+      'BackTrax', 'CollisionLink', 'RepairLink', 'D2DLink',
+      'D2DExpress', 'MyPriceLink', 'LinkIQ', 'OEC EPC', 'ConsumerLink', 'MarketPlaceDirect', 'PartsBrokerDirect'];
+    nav2.addEventListener("notificationsClicked", (e) => {
+      console.log('notificationsClicked', e);
+    });
+    nav2.addEventListener("messagesClicked", (e) => {
+      console.log('messagesClicked', e);
+    });
+    nav2.addEventListener("bentoClicked", (e) => {
+      console.log('bentoClicked', e);
+    });
+    nav2.addEventListener("helpClicked", (e) => {
+      console.log('helpClicked', e);
+    });
+    nav2.addEventListener("locateClicked", (e) => {
+      console.log('locateClicked', e);
+      window.open(devLocateUrl + e.detail, '_blank');
+    });
+
+    /* nav3 */
+    nav3.locateOems = [locateOem2, locateOem3];
+    nav3.enabledApps = ['OpsTrax', 'ValuTrax', 'CollisionLink', 'RepairLink', 'D2DLink'];
+    nav3.isOpstraxUser = true;
+    nav3.userId = 848
+
+    nav3.addEventListener("notificationsClicked", (e) => {
+      console.log('notificationsClicked', e);
+    });
+    nav3.addEventListener("messagesClicked", (e) => {
+      console.log('messagesClicked', e);
+    });
+    nav3.addEventListener("bentoClicked", (e) => {
+      console.log('bentoClicked', e);
+    });
+    nav3.addEventListener("helpClicked", (e) => {
+      console.log('helpClicked', e);
+    });
+    nav3.addEventListener("locateClicked", (e) => {
+      console.log('locateClicked', e);
+      window.open(devLocateUrl + e.detail, '_blank');
+    });
+
   </script>
-
-  <br />
-
-  <h3>⮬ Live OEC-NAV Component ⮭</h3>
-  <br /><br />
-  <h3>⮮ Latest mock for OEC-NAV Component from UX Team ⮯</h3>
-  <div class="flex">
-    <figure>
-      <img src="./assets/oec-nav-mock.png" alt="" />
-    </figure>
-  </div>
 </body>
 
 </html>

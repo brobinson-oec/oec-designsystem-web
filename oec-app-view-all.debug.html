@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>Stencil Component Starter</title>
+
+  <script type="module" src="/build/oec.esm.js"></script>
+  <script nomodule src="/build/oec.js"></script>
+  <style>
+    body {
+      background-color: rgba(246, 242, 243, 0.6);
+      margin: 0;
+      padding: 20px;
+      font-family: 'Open Sans', sans-serif;
+      width: 900px;
+      margin: 0 auto;
+    }
+
+    a:any-link {
+      color: #05f;
+    }
+
+    h3 {
+      color: lightslategray;
+      margin-top: 3rem;
+    }
+
+    .flex {
+      display: flex;
+      gap: 30px;
+
+    }
+
+    :is(pre, .launcher-wrapper) {
+      border: 1px solid #003B71;
+      border-radius: 3px;
+      border-top-width: 3px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+
+    }
+
+    pre,
+    code {
+      padding: 20px;
+      margin: 0;
+      color: crimson
+    }
+
+    .big {
+      font-size: larger;
+    }
+
+    :is(.over-wrapper, .launcher-wrapper) {
+      width: min-content;
+    }
+  </style>
+</head>
+
+<body>
+  <ol>
+    <li><a href="#s1">Scenario 1. Generic. A user subscribed to up to 9 OEC and up to 9 OPS products</a></li>
+    <li><a href="#s2">Scenario 2. Searching the unsubscribed apps - successful search</a></li>
+  </ol>
+
+  <h3 id="s1">Scenario 1. User clicks on View All link in App Launcher window</h3>
+  <span> Then a new window will appear with logos for each unsubscribed application sorted by OPS Modules then OEC application </span>
+  <div class="flex">
+    <div class="over-wrapper">
+      <oec-app-view-all id="view-all-1"></oec-app-view-all>
+    </div>
+    <code><b>unsubscribedApps</b> = ['OPSTrax', 'DeliveryTrax', 'ValuTrax', 'Oec App 1', 'Oec App 2']</code>
+  </div>
+
+  <h3 id="s2">Scenario 2. Searching the unsubscribed apps - successful search</h3>
+  <div class="flex">
+    <div class="over-wrapper">
+      <oec-app-view-all id="view-all-2"></oec-app-view-all>
+    </div>
+    <code><b>unsubscribedApps</b> = ['OPSTrax', 'DeliveryTrax', 'ValuTrax', 'Oec App 1', 'Oec App 2']</code>
+  </div>
+
+  <script>
+    const viewAll1 = document.querySelector('#view-all-1');
+    const unsubscribedApps = [
+      {
+        name: 'OPSTrax',
+        landingUrl: `https://www.opstrax.com/opsportal/#/product/trax`,
+        marketingUrl: `https://www.opstrax.com/opsportal/#/product/trax`,
+        description: 'Collision & Mechanical Ordering',
+        isOpsProduct: true,
+        order: 1,
+        isUnsubscribed: true,
+        imageLogoUrl: '../../assets/unsubscribed-logos/ops-logos/ops-trax-logo.png'
+      },
+      {
+        name: 'DeliveryTrax',
+        landingUrl: `https://www.opstrax.com/opsportal/#/product/deliverytrax`,
+        marketingUrl: `https://www.opstrax.com/opsportal/#/product/deliverytrax`,
+        description: 'Route & Fleet Management',
+        isOpsProduct: true,
+        order: 2,
+        isUnsubscribed: true,
+        imageLogoUrl: '../../assets/unsubscribed-logos/ops-logos/ops-deliverytrax-logo.png'
+      },
+      {
+        name: 'ValuTrax',
+        landingUrl: `https://www.opstrax.com/opsportal/#/product/valutrax`,
+        marketingUrl: `https://www.opstrax.com/opsportal/#/product/valutrax`,
+        description: 'Claims Management',
+        isOpsProduct: true,
+        order: 3,
+        isUnsubscribed: true,
+        imageLogoUrl: '../../assets/unsubscribed-logos/ops-logos/ops-valutrax-logo.png'
+      },
+      {
+        name: 'Oec App 1',
+        landingUrl: `https://www.opstrax.com/opsportal/#/product/valutrax`,
+        marketingUrl: `https://www.opstrax.com/opsportal/#/product/valutrax`,
+        description: 'Claims Management',
+        isOpsProduct: false,
+        order: 4,
+        isUnsubscribed: true,
+        imageLogoUrl: '../../assets/unsubscribed-logos/oec-logos/oec-repairlink-logo.png'
+      },
+      {
+        name: 'Oec App 2',
+        landingUrl: `https://www.opstrax.com/opsportal/#/product/valutrax`,
+        marketingUrl: `https://www.opstrax.com/opsportal/#/product/valutrax`,
+        description: 'Claims Management',
+        isOpsProduct: false,
+        order: 5,
+        isUnsubscribed: true,
+        imageLogoUrl: '../../assets/unsubscribed-logos/oec-logos/oec-d2dlink-logo.png'
+      }
+    ];
+    viewAll1.unsubscribedApps = unsubscribedApps;
+
+    const viewAll2 = document.querySelector('#view-all-2');
+    const unsubscribedApps2 = [
+      {
+        name: 'OPSTrax',
+        landingUrl: `https://www.opstrax.com/opsportal/#/product/trax`,
+        marketingUrl: `https://www.opstrax.com/opsportal/#/product/trax`,
+        description: 'Collision & Mechanical Ordering',
+        isOpsProduct: true,
+        order: 1,
+        isUnsubscribed: true,
+        imageLogoUrl: '../../assets/unsubscribed-logos/ops-logos/ops-trax-logo.png'
+      },
+      {
+        name: 'DeliveryTrax',
+        landingUrl: `https://www.opstrax.com/opsportal/#/product/deliverytrax`,
+        marketingUrl: `https://www.opstrax.com/opsportal/#/product/deliverytrax`,
+        description: 'Route & Fleet Management',
+        isOpsProduct: true,
+        order: 2,
+        isUnsubscribed: true,
+        imageLogoUrl: '../../assets/unsubscribed-logos/ops-logos/ops-deliverytrax-logo.png'
+      },
+      {
+        name: 'ValuTrax',
+        landingUrl: `https://www.opstrax.com/opsportal/#/product/valutrax`,
+        marketingUrl: `https://www.opstrax.com/opsportal/#/product/valutrax`,
+        description: 'Claims Management',
+        isOpsProduct: true,
+        order: 3,
+        isUnsubscribed: true,
+        imageLogoUrl: '../../assets/unsubscribed-logos/ops-logos/ops-valutrax-logo.png'
+      },
+      {
+        name: 'Oec App 1',
+        landingUrl: `https://www.opstrax.com/opsportal/#/product/valutrax`,
+        marketingUrl: `https://www.opstrax.com/opsportal/#/product/valutrax`,
+        description: 'Claims Management',
+        isOpsProduct: false,
+        order: 4,
+        isUnsubscribed: true,
+        imageLogoUrl: '../../assets/unsubscribed-logos/oec-logos/oec-repairlink-logo.png'
+      },
+      {
+        name: 'Oec App 2',
+        landingUrl: `https://www.opstrax.com/opsportal/#/product/valutrax`,
+        marketingUrl: `https://www.opstrax.com/opsportal/#/product/valutrax`,
+        description: 'Claims Management',
+        isOpsProduct: false,
+        order: 5,
+        isUnsubscribed: true,
+        imageLogoUrl: '../../assets/unsubscribed-logos/oec-logos/oec-d2dlink-logo.png'
+      }
+    ];
+    viewAll2.unsubscribedApps = unsubscribedApps2;
+
+  </script>
+
+</body>
