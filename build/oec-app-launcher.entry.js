@@ -1,7 +1,7 @@
 import { h, r as registerInstance, e as createEvent, f as Host } from './index-1f24ee20.js';
 import { R as ReplaySubject, l as forkJoin, f as from, t as takeUntil } from './index-73b9da7f.js';
 import './index-b727d372.js';
-import { m as myContainer, T as TYPES } from './inversify.config-46a3801b.js';
+import { m as myContainer, T as TYPES } from './inversify.config-d47c16ff.js';
 import { O as Overlay } from './Overlay-5fb3f86c.js';
 
 const OecOecIcon = (attrs) => (h("svg", Object.assign({ xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 35 35" }, attrs),

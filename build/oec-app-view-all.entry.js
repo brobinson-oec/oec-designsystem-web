@@ -72,7 +72,7 @@ const OecAppViewAll = class {
         ('')), h("div", { class: "scroll" }, this.rowApp.length > 0 ?
       (this.rowApp.map(this.rowAppTemplateRender.bind(this))) :
       (h("div", { class: "no-orders-found-container" }, h("img", { src: "https://assets.opstrax.com/img/shared/empty_result.jpg" }), h("h3", { class: "resultsTitle" }, "No products found!"), h("div", { class: "results-description" }, "There are no results matching your search. Try changing your filter criteria.")))), h("div", null, this.selectedUnsubscribedApp ?
-      (h("div", { class: "selected-app-container" }, h("div", { class: "col description-wrapper" }, h("div", { class: "description" }, h("img", { src: this.selectedUnsubscribedApp.imageLogoUrl, class: "logo-img" }), h("div", null, h("p", null, this.selectedUnsubscribedApp.description)))), h("div", { class: "col detail-wrapper" }, h("a", { class: "btn-landing", href: this.selectedUnsubscribedApp.landingUrl }, "Details")), h("div", { class: "bg-image z-9" }, h("img", { src: "../../assets/app-launcher-bg.jpg" }))))
+      (h("div", { class: "selected-app-container" }, h("div", { class: "col description-wrapper" }, h("div", { class: "description" }, h("img", { src: this.selectedUnsubscribedApp.imageLogoUrl, class: "logo-img" }), h("div", null, h("p", null, this.selectedUnsubscribedApp.description)))), h("div", { class: "col detail-wrapper" }, h("a", { class: "btn-landing", href: this.selectedUnsubscribedApp.landingUrl }, "Details")), h("div", { class: "bg-image z-9" }, h("img", { src: "https://assets.opstrax.com/products/designsystem/app-launcher-bg.jpg" }))))
       :
         (''))))));
   }
